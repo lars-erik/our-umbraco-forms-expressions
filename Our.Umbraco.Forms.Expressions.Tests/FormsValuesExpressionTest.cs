@@ -1,25 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Irony.Interpreter;
 using Irony.Parsing;
 using NUnit.Framework;
+using Umbraco.Forms.Core;
 
 namespace Our.Umbraco.Forms.Expressions.Tests
 {
-    [TestFixture]
-    public class When_Assigning_Values_To_Variable
+    public class FormsValuesExpressionTest
     {
-        [Test]
-        public void Value_Goes_Into_Runtime_Values()
+        protected static object Evaluate(string program, Dictionary<string, Guid> mappings = null, Record record = null)
         {
-            const string program = @"
-x = 5
-y = x * 2
-";
-
             var grammar = new FormsValuesExpressionGrammar();
             var lng = new LanguageData(grammar);
             Assert.That(lng.Errors, Is.Empty, String.Join(", ", lng.Errors.Select(e => e.Message)));
@@ -28,11 +20,13 @@ y = x * 2
             var tree = parser.Parse(program);
             Assert.That(tree.HasErrors(), Is.False, String.Join(", ", tree.ParserMessages.Select(m => m.Message)));
 
-            var runtime = grammar.CreateRuntime(lng);
+            var runtime = (FormsValuesExpressionRuntime)grammar.CreateRuntime(lng);
+            runtime.Mappings = mappings;
+            runtime.Record = record;
+
             var scriptApp = new ScriptApp(runtime);
             var result = scriptApp.Evaluate(program);
-            
-            Assert.That(result, Is.EqualTo(10));
+            return result;
         }
     }
 }
