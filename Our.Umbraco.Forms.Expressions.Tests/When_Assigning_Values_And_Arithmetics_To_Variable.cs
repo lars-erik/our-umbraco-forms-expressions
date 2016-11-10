@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Our.Umbraco.Forms.Expressions.Tests
 {
     [TestFixture]
-    public class When_Assigning_Values_And_Arithmetics_To_Variable
+    public class When_Assigning_Values_To_Variable
     {
         [Test]
         public void Value_Goes_Into_Runtime_Values()
