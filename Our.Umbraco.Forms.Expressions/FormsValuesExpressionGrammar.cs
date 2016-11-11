@@ -22,6 +22,7 @@ namespace Our.Umbraco.Forms.Expressions
 
             var term = new NonTerminal("term");
             var binExpr = new NonTerminal("binExpr", typeof(BinaryOperationNode));
+            var groupExpr = new NonTerminal("groupExpr");
 
             var binOp = new NonTerminal("binOp", "operator");
             var equals = new NonTerminal("equals", "assignment op");
@@ -41,8 +42,9 @@ namespace Our.Umbraco.Forms.Expressions
 
             assignment.Rule = identifier + equals + expression;
             expression.Rule = term | binExpr;
+            groupExpr.Rule = "(" + expression + ")";
 
-            term.Rule = number | identifier | field; //  
+            term.Rule = number | identifier | field | groupExpr; //  
             binExpr.Rule = expression + binOp + expression;
 
             binOp.Rule = ToTerm("+") | "-" | "*" | "/";
@@ -53,9 +55,10 @@ namespace Our.Umbraco.Forms.Expressions
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");
 
-            MarkTransient(statement, expression, term, equals, binOp);
+            MarkTransient(statement, expression, groupExpr, term, equals, binOp);
 
-            MarkPunctuation("[", "]");
+            MarkPunctuation("(", ")", "[", "]");
+            RegisterBracePair("(", ")");
             RegisterBracePair("[", "]");
 
             AddToNoReportGroup(NewLine);

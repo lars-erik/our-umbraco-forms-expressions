@@ -10,7 +10,10 @@ namespace Our.Umbraco.Forms.Expressions.Tests
 {
     public class FormsValuesExpressionTest
     {
-        protected static object Evaluate(string program, Dictionary<string, Guid> mappings = null, Record record = null)
+        private Dictionary<string, Guid> mappings;
+        private Record record;
+
+        protected object Evaluate(string program)
         {
             var grammar = new FormsValuesExpressionGrammar();
             var lng = new LanguageData(grammar);
@@ -27,6 +30,31 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             var scriptApp = new ScriptApp(runtime);
             var result = scriptApp.Evaluate(program);
             return result;
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            record = new Record();
+            mappings = new Dictionary<string, Guid>();
+        }
+
+        protected void AddField(string fieldName, int value)
+        {
+            var fieldId = CreateMapping(fieldName);
+            AddField(fieldId, value);
+        }
+
+        private Guid CreateMapping(string fieldName)
+        {
+            var fieldId = Guid.NewGuid();
+            mappings.Add(fieldName, fieldId);
+            return fieldId;
+        }
+
+        private void AddField(Guid fieldId, int value)
+        {
+            record.RecordFields.Add(fieldId, new RecordField {Values = new List<object> {value}});
         }
     }
 }

@@ -17,16 +17,9 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         {
             var program = @"x = [field name]";
 
-            var fieldId = Guid.NewGuid();
-            var mapping = new Dictionary<string, Guid>
-            {
-                {"field name", fieldId}
-            };
+            AddField("field name", value);
 
-            var record = new Record();
-            record.RecordFields.Add(fieldId, new RecordField { Values = new List<object>() { value } });
-
-            var result = Evaluate(program, mapping, record);
+            var result = Evaluate(program);
 
             Assert.That(result, Is.EqualTo(value));
         }
