@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Editor</title>
+    <style type="text/css" media="screen">
+        body {
+            overflow: hidden;
+            font-family: "Consolas", monospace;
+        }
+
+        #editor {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 20%;
+        }
+
+        #parameters {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 80%;
+            right: 0;
+            padding: 10px;
+        }
+
+        #errors {
+            color: red;
+        }
+
+        label {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<pre id="editor">
+x = [field name] * 2
+y = x + 1
+</pre>
+    <div id="parameters">
+        <b>Parameters</b>
+        <div id="parameterContainer"></div>
+        <button type="button" id="runBtn">Run</button>
+        <div id="result"></div>
+        <div id="errors"></div>
+    </div>
+
+    <script src="Scripts/ace-bundle.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Scripts/mode-forms.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Scripts/jquery.js"></script>
+    <script>
+        function populateFields(e) {
+            var tokens = [],
+                rowTokens,
+                i, j, exists, container, elm;
+
+            for (i = 0; i < editor.session.getLength() ; i++) {
+                rowTokens = editor.session.getTokens(i)
+                    .filter(function (t) {
+                        return t.type === "support";
+                    });
+                for (j = 0; j < rowTokens.length; j++) {
+                    tokens.push(rowTokens[j]);
+                }
+            }
+
+            for (i = 0; i < tokens.length; i++) {
+                if (tokens[i].type === "support") {
+                    exists = fields.find(function (f) {
+                        return tokens[i].value === "[" + f.name + "]";
+                    }) !== undefined;
+                    if (!exists) {
+                        fields.push({
+                            name: tokens[i].value.substring(1, tokens[i].value.length - 1)
+                        });
+                    }
+                }
+            }
+            for (i = fields.length - 1; i >= 0; i--) {
+                exists = tokens.find(function (t) {
+                    return t.type === "support" && t.value === "[" + fields[i].name + "]";
+                }) !== undefined;
+                if (!exists) {
+                    fields.splice(i, 1);
+                }
+            }
+
+            container = document.getElementById("parameterContainer");
+            container.innerHTML = "";
+            for (i = 0; i < fields.length; i++) {
+                elm = document.createElement("div");
+                elm.innerHTML = "<label>" + fields[i].name + "</label><input type=\"number\" name=\"f" + i + "\" value=\"" + fields[i].value + "\" onchange=\"update(this)\"/>";
+                container.appendChild(elm);
+            }
+        }
+
+        function update(input) {
+            var index = input.name.substr(1);
+            fields[index].value = input.value;
+        }
+
+        var editor = ace.edit("editor");
+        var fields = [];
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/forms");
+        editor.session.on("change", populateFields);
+        populateFields();
+
+        $("#runBtn")
+            .click(function() {
+                var values = {},
+                    i;
+
+                for (i = 0; i < fields.length; i++) {
+                    values[fields[i].name] = fields[i].value;
+                }
+
+                $.ajax({
+                    url: "/api/formsexpressions/run",
+                    method: "POST",
+                    data: JSON.stringify({
+                        program: editor.session.getDocument().getValue(),
+                        values: values
+                    }),
+                    success: function(response) {
+                        $("#result").text(response.value);
+                        $("#errors").text(response.errors);
+                    },
+                    contentType: "application/json"
+                });
+            });
+
+    </script>
+
+</body>
+</html>

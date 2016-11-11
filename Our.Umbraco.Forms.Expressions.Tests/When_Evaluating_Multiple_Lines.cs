@@ -14,12 +14,12 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         public void Last_Line_Is_The_Result()
         {
             var program = @"
-                x = [first field]
+                x = [hvor mange vil du ha]
                 y = [second field] * 2
                 z = (x + y) / 2
             ";
 
-            AddField("first field", 2);
+            AddField("hvor mange vil du ha", 2);
             AddField("second field", 3);
 
             var result = Evaluate(program);
