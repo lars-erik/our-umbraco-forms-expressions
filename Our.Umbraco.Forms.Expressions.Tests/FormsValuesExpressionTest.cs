@@ -4,6 +4,7 @@ using System.Linq;
 using Irony.Interpreter;
 using Irony.Parsing;
 using NUnit.Framework;
+using Our.Umbraco.Forms.Expressions.Language;
 using Umbraco.Forms.Core;
 
 namespace Our.Umbraco.Forms.Expressions.Tests

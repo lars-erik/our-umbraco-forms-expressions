@@ -246,3 +246,5 @@ ModelManifest.xml
 
 bower_components/
 App_Data/
+umbraco/
+umbraco_client/

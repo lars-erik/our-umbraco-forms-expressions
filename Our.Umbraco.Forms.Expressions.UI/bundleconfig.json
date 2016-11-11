@@ -5,12 +5,12 @@
             "bower_components/ace-builds/src/mode-text.js",
             "bower_components/ace-builds/src/theme-twilight.js"
         ],
-        "outputFileName": "Editor/Scripts/ace-bundle.js"
+        "outputFileName": "Editor/Scripts/lib/ace-bundle.js"
     },
     {
         "inputFiles": [
             "bower_components/jquery/dist/jquery.js"
         ],
-        "outputFileName": "Editor/Scripts/jquery.js"
+        "outputFileName": "Editor/Scripts/lib/jquery.js"
     }
 ]

@@ -52,6 +52,7 @@ y = x + 1
         <div id="errors"></div>
     </div>
 
+    <script src="../Scripts/angular.js"></script>
     <script src="Scripts/ace-bundle.js" type="text/javascript" charset="utf-8"></script>
     <script src="Scripts/mode-forms.js" type="text/javascript" charset="utf-8"></script>
     <script src="Scripts/jquery.js"></script>
@@ -114,7 +115,7 @@ y = x + 1
         populateFields();
 
         $("#runBtn")
-            .click(function() {
+            .click(function () {
                 var values = {},
                     i;
 
@@ -129,7 +130,7 @@ y = x + 1
                         program: editor.session.getDocument().getValue(),
                         values: values
                     }),
-                    success: function(response) {
+                    success: function (response) {
                         $("#result").text(response.value);
                         $("#errors").text(response.errors);
                     },

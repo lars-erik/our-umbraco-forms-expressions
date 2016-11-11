@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html ng-app="umbraco">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body ng-controller="test.controller">
+    <pre umb-ace-editor="{mode:'forms', theme:'twilight', onChange: changed}"
+         ng-model="setting.value"
+         style="width: 300px; height: 200px; border: 1px solid gray;"></pre>
+    
+    <input type="text" ng-model="something"/>
+    <pre ng-bind="setting.value"></pre>
+
+    <script src="Scripts/lib/jquery.js"></script>
+    <script src="Scripts/lib/ace-bundle.js"></script>
+    <script src="Scripts/mode-forms.js"></script>
+    <script src="../Scripts/angular.js"></script>
+    <script src="Scripts/strapper.js"></script>
+    <script src="../Scripts/umbraco/aceeditor.directive.js"></script>
+    <script src="Scripts/test/directive-test-controller.js"></script>
+</body>
+</html>

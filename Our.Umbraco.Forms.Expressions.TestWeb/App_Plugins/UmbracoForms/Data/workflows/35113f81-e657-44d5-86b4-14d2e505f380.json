@@ -1,0 +1,13 @@
+{
+  "id": "35113f81-e657-44d5-86b4-14d2e505f380",
+  "name": "Calculate interest",
+  "form": "c0841657-0dcc-40e8-be03-23b8a57799b5",
+  "active": true,
+  "workflowTypeId": "1c07752f-34f4-4e92-a711-bf920e6524e3",
+  "executesOn": "Submitted",
+  "settings": {
+    "Program": "amt = [loan amount]\n",
+    "FieldId": "8a8d4836-487a-4c01-f918-d3f3f7d533a6"
+  },
+  "sortOrder": 1
+}

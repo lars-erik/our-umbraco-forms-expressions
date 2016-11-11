@@ -36,7 +36,7 @@
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }, {
                 token: "support",
-                regex: "\\[[a-zA-Z_$][a-zA-Z0-9_$\\s]*\\b\\]"
+                regex: "\\[[^\\\"\\]]*\\b\\]"
             }, {
                 token: keywordMapper,
                 regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"

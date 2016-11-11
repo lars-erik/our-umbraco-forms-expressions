@@ -5,6 +5,7 @@ using System.Web.Http;
 using Irony;
 using Irony.Interpreter;
 using Irony.Parsing;
+using Our.Umbraco.Forms.Expressions.Language;
 using Umbraco.Forms.Core;
 
 namespace Our.Umbraco.Forms.Expressions.UI.Controllers
@@ -13,13 +14,6 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
     {
         private Dictionary<string, Guid> mappings;
         private Record record;
-
-        [HttpGet]
-        [Route("ping")]
-        public string Ping()
-        {
-            return "pong";
-        }
 
         [HttpPost]
         [Route("api/formsexpressions/run")]

@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{9AD2BC40-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Forms.Expressions.UI", "Our.Umbraco.Forms.Expressions.UI\Our.Umbraco.Forms.Expressions.UI.csproj", "{CDA45088-A83F-469C-9223-55D4709977AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Forms.Expressions.TestWeb", "Our.Umbraco.Forms.Expressions.TestWeb\Our.Umbraco.Forms.Expressions.TestWeb.csproj", "{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{CDA45088-A83F-469C-9223-55D4709977AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDA45088-A83F-469C-9223-55D4709977AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDA45088-A83F-469C-9223-55D4709977AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

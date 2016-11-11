@@ -1,0 +1,16 @@
+﻿<div ng-controller="ufx.program.controller">
+    <a ng-click="toggleFullScreen()"><i class="icon icon-window-sizes"></i></a>
+    <pre ng-model="setting.value" umb-ace-editor="aceOpts" style="width: 90%; height: 200px;"></pre>
+    <div class="hidden ufx-fullscreen" ng-show="fullScreen" style="display: none; position: fixed; left: 80px; top: 0; right: 0; bottom: 0; padding: 10px; z-index: 9999; background-color: white;">
+        <pre ng-model="setting.value" umb-ace-editor="{mode:'forms',theme:'razor-chrome'}" style="position: absolute; left: 0; top: 0; right: 200px; bottom: 40px; height: auto;"></pre>
+        <div style="position: absolute; width: 200px; right: 0; top: 0; bottom: 40px;">
+            <div>
+                <b>Parameters</b>
+            </div>
+        </div>
+        <div style="position: absolute; left: 80px; bottom: 0; right: 0; height: 40px;">
+            <button class="btn">Run</button>
+            <button class="btn btn-success" ng-click="closeFullScreen()">Close</button>
+        </div>
+    </div>
+</div>
