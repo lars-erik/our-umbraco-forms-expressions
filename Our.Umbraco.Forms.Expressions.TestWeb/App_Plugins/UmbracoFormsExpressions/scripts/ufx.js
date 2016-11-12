@@ -23,7 +23,11 @@ angular.module("umbraco").requires.push("ufx");
 (function() {
     angular.module("ufx").controller("ufx.program.controller", [
         "$scope",
-        function (scope) {
+        "$http",
+        "umbRequestHelper",
+        function (scope, http, requestHelper) {
+            var urlKey = "ufx-program-evaluator",
+                runUrl = requestHelper.getApiUrl(urlKey, "Run");
 
             function fieldIsForToken(field, token) {
                 return token.value.toLowerCase() === "[" + field.name.toLowerCase() + "]";
@@ -93,6 +97,23 @@ angular.module("umbraco").requires.push("ufx");
                 removeUnusedTokens(tokens);
             }
 
+            scope.run = function () {
+                var values = {},
+                    i;
+
+                for (i = 0; i < scope.fields.length; i++) {
+                    values[scope.fields[i].name] = scope.fields[i].value;
+                }
+
+                http.post(runUrl, {
+                    Program: scope.setting.value,
+                    Values: values
+                }).then(function(response) {
+                    scope.result = response.data;
+                    scope.hasResult = response.data.Errors === null;
+                });
+            }
+
             scope.toggleFullScreen = function () {
                 scope.fullScreen = true;
             }
@@ -104,6 +125,8 @@ angular.module("umbraco").requires.push("ufx");
 
             scope.fullScreen = false;
             scope.fields = [];
+            scope.result = {};
+            scope.hasResult = false;
 
             scope.aceOpts = {
                 mode: "forms",

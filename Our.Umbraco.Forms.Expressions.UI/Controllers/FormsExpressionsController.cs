@@ -17,7 +17,7 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
 
         [HttpPost]
         [Route("api/formsexpressions/run")]
-        public Result Run([FromBody]ProgramRequest programRequest)
+        public FormsValuesResult Run([FromBody]ProgramRequest programRequest)
         {
             record = new Record();
             mappings = new Dictionary<string, Guid>();
@@ -28,32 +28,10 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
             return Evaluate(programRequest.Program);
         }
 
-        protected Result Evaluate(string program)
+        protected FormsValuesResult Evaluate(string program)
         {
-            var grammar = new FormsValuesExpressionGrammar();
-            var lng = new LanguageData(grammar);
-            if (lng.Errors.Any())
-                return new Result { Errors = String.Join(", ", lng.Errors.Select(e => e.Message)) };
-
-            var parser = new Parser(lng);
-            var tree = parser.Parse(program);
-            if (tree.ParserMessages.Any(m => m.Level == ErrorLevel.Error))
-                return new Result { Errors = String.Join(", ", tree.ParserMessages.Select(m => m.Message)) };
-
-            var runtime = (FormsValuesExpressionRuntime)grammar.CreateRuntime(lng);
-            runtime.Mappings = mappings;
-            runtime.Record = record;
-
-            var scriptApp = new ScriptApp(runtime);
-            try
-            {
-                var result = scriptApp.Evaluate(program);
-                return new Result { Value = (int)result };
-            }
-            catch (Exception ex)
-            {
-                return new Result { Errors = ex.Message };
-            }
+            var evaluator = new FormsValuesEvaluator(record, mappings, program);
+            return evaluator.Evaluate();
         }
 
         protected void AddField(string fieldName, int value)
@@ -73,12 +51,6 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
         {
             record.RecordFields.Add(fieldId, new RecordField { Values = new List<object> { value } });
         }
-    }
-
-    public class Result
-    {
-        public int Value { get; set; }
-        public string Errors { get; set; }
     }
 
     public class ProgramRequest

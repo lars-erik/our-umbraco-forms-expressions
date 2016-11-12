@@ -15,9 +15,17 @@
                     <input type="number" ng-model="field.value" />
                 </div>
             </div>
+            <div class="result" ng-show="hasResult">
+                <label>Result:</label>
+                {{result.Value}}
+            </div>
+            <div class="error" ng-show="result.Errors">
+                <label>Errors:</label>
+                {{result.Errors}}
+            </div>
         </div>
         <div class="fs-bar">
-            <button class="btn">Run</button>
+            <button class="btn" ng-click="run()">Run</button>
             <button class="btn btn-success" ng-click="closeFullScreen()">Close</button>
         </div>
     </div>
