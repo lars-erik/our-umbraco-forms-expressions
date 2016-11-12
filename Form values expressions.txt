@@ -2,10 +2,11 @@
 
 <statement>         ::= <assignment> | <expression> | <empty>
 
-<assignment>        ::= <identifier> <equals> <expression>
+<assignment>        ::= <assignable> <equals> <expression>
 <expression>        ::= <term> | <unary expression> | <binary expression>       # possibly introduce if
 
-<term>              ::= <number> | <group expression> | <field value> | <identifier>
+<assignable>        ::= <identifier> | <field value>
+<term>              ::= <number> | <group expression> | <assignable>
 <unary expression>  ::= <unary operator> <term>
 <binary expression> ::= <expression> <binary operator> <expression>
 <group expression>  ::= "(" <expression> ")"

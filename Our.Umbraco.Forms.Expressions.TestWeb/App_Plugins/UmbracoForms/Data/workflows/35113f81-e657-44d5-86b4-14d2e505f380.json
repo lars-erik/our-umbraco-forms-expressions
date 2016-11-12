@@ -6,8 +6,7 @@
   "workflowTypeId": "1c07752f-34f4-4e92-a711-bf920e6524e3",
   "executesOn": "Submitted",
   "settings": {
-    "Program": "P = [loan amount]\nr = [interest] / 100 / 12\nI = P * r * [terms]\ntotal = P + I",
-    "FieldId": "8a8d4836-487a-4c01-f918-d3f3f7d533a6"
+    "Program": "P = [loan amount]\nr = [interest] / 100 / 12\nI = P * r * [terms]\n[total amount] = P + I\n[monthly fee] = [total amount] / [terms]"
   },
   "sortOrder": 1
 }

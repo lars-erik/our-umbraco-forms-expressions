@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Irony.Interpreter;
+using Irony.Interpreter.Ast;
 using Irony.Parsing;
 using Umbraco.Forms.Core;
 
@@ -32,8 +33,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
                     var fieldId = Mappings[lowerKey];
                     var field = Record.GetRecordField(fieldId);
                     var value = Convert.ToDouble(field.ValuesAsString());
-                    return new ConstantBinding(value,
-                        new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
+                    return new ConstantBinding(value, new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
                 }
                 catch
                 {
@@ -42,6 +42,40 @@ namespace Our.Umbraco.Forms.Expressions.Language
             }
 
             return base.BindSymbolForRead(request);
+        }
+
+        public override Binding BindSymbolForWrite(BindingRequest request)
+        {
+            var lowerKey = request.Symbol.ToLower();
+            if (Mappings.ContainsKey(lowerKey))
+            {
+                return new FieldBinding(request.Symbol, BindingTargetType.ClrInterop, SetField);
+            }
+
+            return base.BindSymbolForWrite(request);
+        }
+
+        private void SetField(ScriptThread thread, object value)
+        {
+            var lowerKey = thread.CurrentNode.AsString.ToLower();
+            try
+            {
+                var fieldId = Mappings[lowerKey];
+                var field = Record.GetRecordField(fieldId);
+                field.Values = new List<object> { value };
+            }
+            catch
+            {
+                throw new Exception("Could not bind field name " + lowerKey + " to a floating point value.");
+            }
+        }
+    }
+
+    public class FieldBinding : Binding
+    {
+        public FieldBinding(string symbol, BindingTargetType targetType, ValueSetterMethod setter) : base(symbol, targetType)
+        {
+            this.SetValueRef = setter;
         }
     }
 }

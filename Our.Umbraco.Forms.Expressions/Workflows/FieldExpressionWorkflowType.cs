@@ -15,9 +15,6 @@ namespace Our.Umbraco.Forms.Expressions.Workflows
         [Setting("Program", alias = "program", description = "Program to execute for the set value", view = "~/App_Plugins/UmbracoFormsExpressions/settings/program.html")]
         public string Program { get; set; }
 
-        [Setting("Field to set", alias = "fieldId", description = "Field to set to result of program", view = "~/App_Plugins/UmbracoFormsExpressions/settings/field.html")]
-        public string FieldId { get; set; }
-
         public FieldExpressionWorkflowType()
         {
             Id = new Guid("1C07752F-34F4-4E92-A711-BF920E6524E3");
@@ -32,8 +29,6 @@ namespace Our.Umbraco.Forms.Expressions.Workflows
             var result = evaluator.Evaluate(record, mappings);
             if (result.Errors != null)
                 return WorkflowExecutionStatus.Failed;
-
-            record.GetRecordField(new Guid(FieldId)).Values = new List<object> {result.Value};
 
             return WorkflowExecutionStatus.Completed;
         }

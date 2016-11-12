@@ -46,5 +46,10 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         {
             record.RecordFields.Add(fieldId, new RecordField {Values = new List<object> {value}});
         }
+
+        protected object FieldValue(string fieldName)
+        {
+            return record.GetRecordField(mappings[fieldName]).Values[0];
+        }
     }
 }

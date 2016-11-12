@@ -15,6 +15,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var assignment = new NonTerminal("assignment", typeof(AssignmentNode));
             var expression = new NonTerminal("expression");
 
+            var assignable = new NonTerminal("assignable");
             var term = new NonTerminal("term");
             var binExpr = new NonTerminal("binExpr", typeof(BinaryOperationNode));
             var groupExpr = new NonTerminal("groupExpr");
@@ -37,11 +38,12 @@ namespace Our.Umbraco.Forms.Expressions.Language
 
             statement.Rule = assignment | expression | Empty;
 
-            assignment.Rule = identifier + equals + expression;
+            assignment.Rule = assignable + equals + expression;
             expression.Rule = term | binExpr;
             groupExpr.Rule = "(" + expression + ")";
 
-            term.Rule = number | identifier | field | groupExpr; //  
+            assignable.Rule = identifier | field;
+            term.Rule = number | assignable | groupExpr; //  
             binExpr.Rule = expression + binOp + expression;
 
             binOp.Rule = ToTerm("+") | "-" | "*" | "/";
@@ -52,7 +54,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");
 
-            MarkTransient(statement, expression, groupExpr, term, equals, binOp);
+            MarkTransient(statement, expression, groupExpr, term, equals, binOp, assignable);
 
             MarkPunctuation("(", ")", "[", "]");
             RegisterBracePair("(", ")");
