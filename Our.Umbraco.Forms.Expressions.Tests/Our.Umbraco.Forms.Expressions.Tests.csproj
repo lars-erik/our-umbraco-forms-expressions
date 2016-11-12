@@ -161,6 +161,7 @@
     <Compile Include="When_Assigning_Value_To_Variable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_Assigning_Field_Value_To_Variable.cs" />
+    <Compile Include="When_Calculating_Decimals.cs" />
     <Compile Include="When_Evaluating_Multiple_Lines.cs" />
     <Compile Include="When_Prioritizing_Operators.cs" />
   </ItemGroup>

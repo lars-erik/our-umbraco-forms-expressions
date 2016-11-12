@@ -13,44 +13,54 @@ namespace Our.Umbraco.Forms.Expressions.Language
 {
     public class FormsValuesEvaluator
     {
-        private readonly Dictionary<string, Guid> mappings;
-        private readonly Record record;
         private readonly string program;
+        private FormsValuesExpressionGrammar grammar;
+        private Parser parser;
+        private LanguageData language;
 
-        public FormsValuesEvaluator(Record record, Dictionary<string, Guid> mappings, string program)
+        public FormsValuesEvaluator(string program)
         {
-            this.record = record;
-            this.mappings = mappings;
             this.program = program;
+
+            grammar = new FormsValuesExpressionGrammar();
+            language = new LanguageData(grammar);
+            parser = new Parser(language);
         }
 
-        public FormsValuesResult Evaluate()
+        public FormsValuesResult Evaluate(Record record, Dictionary<string, Guid> mappings)
         {
-            var grammar = new FormsValuesExpressionGrammar();
-            var lng = new LanguageData(grammar);
-            if (lng.Errors.Any())
-                return new FormsValuesResult { Errors = String.Join(", ", lng.Errors.Select(e => e.Message)) };
+            var result = Validate();
+            if (result.Errors != null)
+                return result;
 
-            var parser = new Parser(lng);
-            var tree = parser.Parse(program);
-            if (tree.ParserMessages.Any(m => m.Level == ErrorLevel.Error))
-                return new FormsValuesResult { Errors = String.Join(", ", tree.ParserMessages.Select(m => m.Message)) };
-
-            var runtime = (FormsValuesExpressionRuntime)grammar.CreateRuntime(lng);
+            var runtime = (FormsValuesExpressionRuntime)grammar.CreateRuntime(language);
             runtime.Mappings = mappings;
             runtime.Record = record;
 
             var scriptApp = new ScriptApp(runtime);
             try
             {
-                var result = scriptApp.Evaluate(program);
-                return new FormsValuesResult { Value = (int)result };
+                var evaluatedValue = scriptApp.Evaluate(program);
+                decimal value = Convert.ToDecimal(evaluatedValue);
+                return new FormsValuesResult { Value = value };
             }
             catch (Exception ex)
             {
-                return new FormsValuesResult { Errors = ex.Message };
+                return new FormsValuesResult { Errors = "Result was not a decimal value. " + ex.Message };
             }
         }
 
+        public FormsValuesResult Validate()
+        {
+            if (language.Errors.Any())
+                return new FormsValuesResult {Errors = String.Join(", ", language.Errors.Select(e => e.Message))};
+
+            var tree = parser.Parse(program);
+
+            if (tree.ParserMessages.Any(m => m.Level == ErrorLevel.Error))
+                return new FormsValuesResult {Errors = String.Join(", ", tree.ParserMessages.Select(m => m.Message))};
+
+            return new FormsValuesResult();
+        }
     }
 }

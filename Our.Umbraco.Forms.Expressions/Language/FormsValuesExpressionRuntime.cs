@@ -27,10 +27,18 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var lowerKey = request.Symbol.ToLower();
             if (Mappings.ContainsKey(lowerKey))
             {
-                var fieldId = Mappings[lowerKey];
-                var field = Record.GetRecordField(fieldId);
-                var value = Convert.ToInt32(field.ValuesAsString());
-                return new ConstantBinding(value, new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
+                try
+                {
+                    var fieldId = Mappings[lowerKey];
+                    var field = Record.GetRecordField(fieldId);
+                    var value = Convert.ToDouble(field.ValuesAsString());
+                    return new ConstantBinding(value,
+                        new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
+                }
+                catch
+                {
+                    throw new Exception("Could not bind field name " + lowerKey + " to a floating point value.");
+                }
             }
 
             return base.BindSymbolForRead(request);

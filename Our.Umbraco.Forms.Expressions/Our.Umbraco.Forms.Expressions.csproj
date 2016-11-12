@@ -286,6 +286,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Language\FieldTerminal.cs" />
     <Compile Include="Language\FormsValuesAstBuilder.cs" />
     <Compile Include="Language\FormsValuesAstContext.cs" />
     <Compile Include="Language\FormsValuesEvaluator.cs" />

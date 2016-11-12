@@ -14,10 +14,10 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         private Dictionary<string, Guid> mappings;
         private Record record;
 
-        protected int Evaluate(string program)
+        protected decimal Evaluate(string program)
         {
-            var evaluator = new FormsValuesEvaluator(record, mappings, program);
-            var result = evaluator.Evaluate();
+            var evaluator = new FormsValuesEvaluator(program);
+            var result = evaluator.Evaluate(record, mappings);
             Assert.That(result.Errors, Is.Null, result.Errors);
             return result.Value;
         }

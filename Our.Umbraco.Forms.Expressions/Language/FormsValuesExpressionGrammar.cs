@@ -1,4 +1,5 @@
-﻿using Irony.Interpreter;
+﻿using System;
+using Irony.Interpreter;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
 
@@ -24,6 +25,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var field = new FieldTerminal("field");
             var identifier = new IdentifierTerminal("identifier");
             var number = new NumberLiteral("number");
+            number.DefaultFloatType = TypeCode.Double;
+            number.DecimalSeparator = '.';
 
             StringLiteral fieldQuoted = new StringLiteral("field_quoted");
             fieldQuoted.AddStartEnd("[", "]", StringOptions.NoEscapes);
@@ -72,14 +75,6 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var astContext = new FormsValuesAstContext(language, opHandler);
             var astBuilder = new FormsValuesAstBuilder(astContext);
             astBuilder.BuildAst(parseTree);
-        }
-    }
-
-    public class FieldTerminal : Terminal
-    {
-        public FieldTerminal(string name)
-            : base(name)
-        {
         }
     }
 }

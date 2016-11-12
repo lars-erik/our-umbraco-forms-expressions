@@ -30,8 +30,8 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
 
         protected FormsValuesResult Evaluate(string program)
         {
-            var evaluator = new FormsValuesEvaluator(record, mappings, program);
-            return evaluator.Evaluate();
+            var evaluator = new FormsValuesEvaluator(program);
+            return evaluator.Evaluate(record, mappings);
         }
 
         protected void AddField(string fieldName, int value)
