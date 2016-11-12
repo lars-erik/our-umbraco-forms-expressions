@@ -290,6 +290,7 @@
     <Compile Include="Language\FormsValuesExpressionGrammar.cs" />
     <Compile Include="Language\FormsValuesExpressionRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebApi\BackofficeProgramController.cs" />
     <Compile Include="Workflows\FieldExpressionWorkflowType.cs" />
   </ItemGroup>
   <ItemGroup>

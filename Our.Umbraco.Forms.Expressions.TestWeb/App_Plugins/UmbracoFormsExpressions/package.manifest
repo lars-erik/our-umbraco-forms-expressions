@@ -2,5 +2,8 @@
     "javascript": [
         "~/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.js",
         "~/App_Plugins/UmbracoFormsExpressions/scripts/ufx.js"
+    ],
+    "css": [
+        "~/App_Plugins/UmbracoFormsExpressions/styles/ufx.css"
     ]
 }

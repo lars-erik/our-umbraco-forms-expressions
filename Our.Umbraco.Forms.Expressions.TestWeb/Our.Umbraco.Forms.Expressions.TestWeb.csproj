@@ -395,6 +395,11 @@
     <Content Include="App_Plugins\UmbracoForms\Data\Templates\commentform.json" />
     <Content Include="bundleconfig.json" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\package.manifest" />
+    <Content Include="App_Plugins\UmbracoFormsExpressions\styles\ufx.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -417,12 +422,20 @@
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\field-directive.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\module.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\program-controller.js" />
+    <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\tests\program-controller-tests.js" />
+    <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\tests\umbraco-mocks.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\ufx.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\ufx.min.js">
       <DependentUpon>ufx.js</DependentUpon>
     </Content>
     <Content Include="App_Plugins\UmbracoFormsExpressions\settings\field.html" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\settings\program.html" />
+    <Content Include="App_Plugins\UmbracoFormsExpressions\styles\ufx.css">
+      <DependentUpon>ufx.less</DependentUpon>
+    </Content>
+    <Content Include="App_Plugins\UmbracoFormsExpressions\styles\ufx.min.css">
+      <DependentUpon>ufx.css</DependentUpon>
+    </Content>
     <Content Include="App_Plugins\UmbracoForms\Assets\BaremetricsCalendar\public\css\application.css" />
     <Content Include="App_Plugins\UmbracoForms\Assets\BaremetricsCalendar\public\js\Calendar.js" />
     <Content Include="App_Plugins\UmbracoForms\Assets\defaultform.css" />
@@ -599,9 +612,7 @@
       <Name>Our.Umbraco.Forms.Expressions</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Plugins\UmbracoFormsExpressions\scripts\src\lib\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

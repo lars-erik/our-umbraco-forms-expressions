@@ -3,7 +3,75 @@
         "$scope",
         function (scope) {
 
-            scope.toggleFullScreen = function() {
+            function fieldIsForToken(field, token) {
+                return token.value.toLowerCase() === "[" + field.name.toLowerCase() + "]";
+            }
+
+            function findTokens(editor) {
+                var lines = editor.session.getLength(),
+                    lineTokens,
+                    tokens = [],
+                    i,
+                    j;
+
+                for (i = 0; i < lines; i++) {
+                    lineTokens = editor.session.getTokens(i);
+                    for (j = 0; j < lineTokens.length; j++) {
+                        if (lineTokens[j].type === "support") {
+                            tokens.push(lineTokens[j]);
+                        }
+                    }
+                }
+
+                return tokens;
+            }
+
+            function addNewTokens(tokens) {
+                var i, j, fieldIndex;
+
+                for (i = 0; i < tokens.length; i++) {
+                    fieldIndex = -1;
+                    for (j = 0; j < scope.fields.length; j++) {
+                        if (fieldIsForToken(scope.fields[j], tokens[i])) {
+                            fieldIndex = j;
+                            break;
+                        }
+                    }
+                    if (fieldIndex === -1) {
+                        scope.fields.push({
+                            name: tokens[i].value.substring(1, tokens[i].value.length - 1),
+                            value: 0
+                        });
+                    }
+                }
+            }
+
+            function removeUnusedTokens(tokens) {
+                var i, j, tokenIndex;
+
+                for (i = scope.fields.length - 1; i >= 0; i--) {
+                    tokenIndex = -1;
+                    for (j = 0; j < tokens.length; j++) {
+                        if (fieldIsForToken(scope.fields[i], tokens[j])) {
+                            tokenIndex = i;
+                            break;
+                        }
+                    }
+                    if (tokenIndex === -1) {
+                        scope.fields.splice(i, 1);
+                    }
+                }
+            }
+
+            function populateFields(args) {
+                var editor = args[1],
+                    tokens = findTokens(editor);
+
+                addNewTokens(tokens);
+                removeUnusedTokens(tokens);
+            }
+
+            scope.toggleFullScreen = function () {
                 scope.fullScreen = true;
             }
 
@@ -12,18 +80,13 @@
                 scope.$digest();
             }
 
-            function changed(args) {
-                var editor = args[1],
-                    lines = editor.session.getLength();
-
-            }
-
             scope.fullScreen = false;
+            scope.fields = [];
 
             scope.aceOpts = {
                 mode: "forms",
                 theme: "razor-chrome",
-                onChange: changed
+                onChange: populateFields
             }
 
         }
