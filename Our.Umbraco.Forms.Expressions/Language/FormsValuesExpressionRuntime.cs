@@ -9,6 +9,11 @@ namespace Our.Umbraco.Forms.Expressions.Language
 {
     public class FormsValuesExpressionRuntime : LanguageRuntime
     {
+        Dictionary<string, string> functionMappings = new Dictionary<string, string>
+        {
+            { "power", "Pow" }
+        }; 
+
         public Dictionary<string, Guid> Mappings;
         public Record Record;
 
@@ -18,8 +23,18 @@ namespace Our.Umbraco.Forms.Expressions.Language
         {
         }
 
+        public override void Init()
+        {
+            base.Init();
+            BuiltIns.ImportStaticMembers(typeof(Math));
+        }
+
         public override Binding Bind(BindingRequest request)
         {
+            var sym = request.Symbol.ToLower();
+            if (functionMappings.ContainsKey(sym))
+                request.Symbol = functionMappings[sym];
+
             return base.Bind(request);
         }
 

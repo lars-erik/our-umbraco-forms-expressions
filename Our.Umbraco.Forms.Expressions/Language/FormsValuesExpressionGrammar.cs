@@ -1,4 +1,5 @@
 ﻿using System;
+using Irony.Ast;
 using Irony.Interpreter;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
@@ -19,6 +20,10 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var term = new NonTerminal("term");
             var binExpr = new NonTerminal("binExpr", typeof(BinaryOperationNode));
             var groupExpr = new NonTerminal("groupExpr");
+
+            var argList = new NonTerminal("argList", typeof(ExpressionListNode));
+            var functionCall = new NonTerminal("functionCall", typeof(FunctionCallNode));
+            var functionName = new NonTerminal("functionName", typeof(FunctionNameNode));
 
             var binOp = new NonTerminal("binOp", "operator");
             var equals = new NonTerminal("equals", "assignment op");
@@ -42,9 +47,13 @@ namespace Our.Umbraco.Forms.Expressions.Language
             expression.Rule = term | binExpr;
             groupExpr.Rule = "(" + expression + ")";
 
-            assignable.Rule = identifier | field;
+            assignable.Rule = identifier | field | functionCall;
             term.Rule = number | assignable | groupExpr; //  
             binExpr.Rule = expression + binOp + expression;
+
+            argList.Rule = MakeStarRule(argList, ToTerm(","), expression);
+            functionCall.Rule = functionName + "(" + argList + ")";
+            functionName.Rule = ToTerm("power");
 
             binOp.Rule = ToTerm("+") | "-" | "*" | "/";
             equals.Rule = ToTerm("=");
@@ -79,4 +88,20 @@ namespace Our.Umbraco.Forms.Expressions.Language
             astBuilder.BuildAst(parseTree);
         }
     }
+
+    public class FunctionNameNode : IdentifierNode
+    {
+        public override void Init(AstContext context, ParseTreeNode treeNode)
+        {
+            this.Term = treeNode.Term;
+            Span = treeNode.Span;
+            ErrorAnchor = this.Location;
+            treeNode.AstNode = this;
+            AsString = (Term == null ? this.GetType().Name : Term.Name);
+
+            Symbol = treeNode.ChildNodes[0].Token.ValueString;
+            AsString = Symbol;
+        }
+    }
+
 }

@@ -165,6 +165,7 @@
     <Compile Include="When_Calculating_Decimals.cs" />
     <Compile Include="When_Evaluating_Multiple_Lines.cs" />
     <Compile Include="When_Prioritizing_Operators.cs" />
+    <Compile Include="When_Using_Math_Functions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

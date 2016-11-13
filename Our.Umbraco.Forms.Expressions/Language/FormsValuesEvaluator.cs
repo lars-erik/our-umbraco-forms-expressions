@@ -38,9 +38,18 @@ namespace Our.Umbraco.Forms.Expressions.Language
             runtime.Record = record;
 
             var scriptApp = new ScriptApp(runtime);
+            object evaluatedValue;
             try
             {
-                var evaluatedValue = scriptApp.Evaluate(program);
+                evaluatedValue = scriptApp.Evaluate(program);
+            }
+            catch (Exception ex)
+            {
+                return new FormsValuesResult { Errors = "Error in program. " + ex.Message };
+            }
+
+            try
+            {
                 decimal value = Convert.ToDecimal(evaluatedValue);
                 return new FormsValuesResult { Value = value };
             }
