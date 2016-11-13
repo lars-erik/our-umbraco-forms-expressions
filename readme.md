@@ -13,7 +13,7 @@ Installation is done from nuget.
 
 Add a workflow of the type "UFX Calculation" to your form.
 
-Enter assignments and calculations in the "program" setting using the [UFX syntax](wiki/ufx-language).
+Enter assignments and calculations in the "program" setting using the [UFX syntax](https://github.com/lars-erik/our-umbraco-forms-expressions/wiki/UFX-Language).
 Assign values to fields.
 
 Click the "full screen" button to open the workbench.
@@ -26,5 +26,5 @@ Whenever the program changes, the referenced fields appear in the parameter list
 
 ## More
 
-- [UFX Syntax](wiki/ufx-language)
-- [Builtin functions](wiki/functions)
+- [UFX Syntax](https://github.com/lars-erik/our-umbraco-forms-expressions/wiki/UFX-Language)
+- [Builtin functions](https://github.com/lars-erik/our-umbraco-forms-expressions/wiki/Functions)
