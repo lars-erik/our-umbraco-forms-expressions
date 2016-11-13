@@ -3,16 +3,16 @@
 <statement>         ::= <assignment> | <expression> | <empty>
 
 <assignment>        ::= <assignable> <equals> <expression>
-<expression>        ::= <term> | <unary expression> | <binary expression>       # possibly introduce if
+<expression>        ::= <term> | <unary expression> | <binary expression>
 <group expression>  ::= "(" <expression> ")"
 
 <assignable>        ::= <identifier> | <field value>
 <term>              ::= <number> | <group expression> | <assignable>
-#<unary expression>  ::= <unary operator> <term>                                # not done yet
+<unary expression>  ::= <unary operator> <term>
 <binary expression> ::= <expression> <binary operator> <expression>
 
-<argument list>     ::= <expression> | <expression> "," <argument list>
 <function call>     ::= <function name> "(" <argument list> ")"
+<argument list>     ::= <expression> | <expression> "," <argument list>
 <function name>     ::= "power" | "round"
 
 <unary operator>    ::= "+" | "-"
@@ -22,4 +22,3 @@
 <field value>       ::= "[" <field name> "]"
 <field name>        ::= # name of field, incl. spaces
 <identifier>        ::= # one word identifier, variable
-
