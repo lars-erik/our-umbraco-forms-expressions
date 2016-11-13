@@ -1,44 +1,30 @@
-## Our Umbraco Forms Expressions
+# UFX: Our Umbraco Forms Expressions
 
-Currently a prototype in the works.
-Can do maths on Umbraco Forms Records and return a value.
+An expression parser for Umbraco Forms. Can set field values based on arithmetics.
 
-Example:
 
-    x = [field value]
-    answer = x * 2
+## Installation
 
-Should return 10. :)
+Installation is done from nuget.
 
-### Ambition
+`install-package our.umbraco.forms.expressions.web`
 
-Workflow to set field value to result of an equation
+## Usage
 
-To support at least this BNF:
+Add a workflow of the type "UFX Calculation" to your form.
 
-    <program>           ::= <statement> | <statement> <program>
+Enter assignments and calculations in the "program" setting using the [UFX syntax](wiki/ufx-language).
+Assign values to fields.
 
-    <statement>         ::= <assignment> | <expression> | <empty>
+Click the "full screen" button to open the workbench.
 
-    <assignment>        ::= <identifier> <equals> <expression>
-    <expression>        ::= <term> | <unary expression> | <binary expression>       # possibly introduce if
+## Using the workbench
 
-    <term>              ::= <number> | <group expression> | <field value> | <identifier>
-    <unary expression>  ::= <unary operator> <term>
-    <binary expression> ::= <expression> <binary operator> <expression>
-    <group expression>  ::= "(" <expression> ")"
+The workbench is divided into three areas: the editor, parameters and actions.
 
-    <unary operator>    ::= "+" | "-"
-    <binary operator>   ::= "+" | "-" | "*" | "/"
-    <equals>            ::= "="
+Whenever the program changes, the referenced fields appear in the parameter list. Enter values for the read fields. Click the run button to simulate applying the program to a form submission. The set fields and the result of the expression is displayed below the parameters.
 
-    <field value>       ::= "[" <field name> "]"
-    <field name>        ::= # name of field, incl. spaces
-    <identifier>        ::= # one word identifier, variable
+## More
 
-    ! Math imports
-
-    ! Ceiling
-    ! Floor
-    ! Abs
-    ! more?
+- [UFX Syntax](wiki/ufx-language)
+- [Builtin functions](wiki/functions)
