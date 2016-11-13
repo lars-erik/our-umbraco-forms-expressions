@@ -23,9 +23,3 @@
 <field name>        ::= # name of field, incl. spaces
 <identifier>        ::= # one word identifier, variable
 
-! Math imports
-
-! Ceiling
-! Floor
-! Abs
-! more?

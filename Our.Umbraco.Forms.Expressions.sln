@@ -22,6 +22,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Forms.Expressio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Forms.Expressions.TestWeb", "Our.Umbraco.Forms.Expressions.TestWeb\Our.Umbraco.Forms.Expressions.TestWeb.csproj", "{1A262DF7-0986-4BD2-BAA4-93C9E0BEB0BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{B5F4F577-1A3F-4C6E-B0DA-137BB5DF525B}"
+	ProjectSection(SolutionItems) = preProject
+		Nuget\Our.Umbraco.Forms.Expressions.Web.nuspec = Nuget\Our.Umbraco.Forms.Expressions.Web.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

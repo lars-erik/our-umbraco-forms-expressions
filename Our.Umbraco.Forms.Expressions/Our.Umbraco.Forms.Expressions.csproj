@@ -296,10 +296,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup\RouteSetup.cs" />
     <Compile Include="WebApi\BackofficeProgramController.cs" />
-    <Compile Include="Workflows\FieldExpressionWorkflowType.cs" />
+    <Compile Include="Workflows\UmbracoFormsExpressionWorkflowType.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Our.Umbraco.Forms.Expressions.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

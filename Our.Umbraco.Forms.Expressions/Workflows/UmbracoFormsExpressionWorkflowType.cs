@@ -10,16 +10,17 @@ using Umbraco.Forms.Core.Enums;
 
 namespace Our.Umbraco.Forms.Expressions.Workflows
 {
-    public class FieldExpressionWorkflowType : WorkflowType
+    public class UmbracoFormsExpressionWorkflowType : WorkflowType
     {
         [Setting("Program", alias = "program", description = "Program to execute for the set value", view = "~/App_Plugins/UmbracoFormsExpressions/settings/program.html")]
         public string Program { get; set; }
 
-        public FieldExpressionWorkflowType()
+        public UmbracoFormsExpressionWorkflowType()
         {
             Id = new Guid("1C07752F-34F4-4E92-A711-BF920E6524E3");
-            Name = "Field Expression";
+            Name = "UFX Calculation";
             Description = "Calculate a value for a hidden field based on user input";
+            Icon = "icon-brackets";
         }
 
         public override WorkflowExecutionStatus Execute(Record record, RecordEventArgs e)

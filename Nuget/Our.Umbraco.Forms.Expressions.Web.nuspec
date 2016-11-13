@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Our.Umbraco.Forms.Expressions.Web</id>
+    <version>1.0.0-beta</version>
+    <authors>Lars-Erik Aabech</authors>
+    <owners>Lars-Erik Aabech</owners>
+    <licenseUrl>https://raw.githubusercontent.com/lars-erik/our-umbraco-forms-expressions/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/lars-erik/our-umbraco-forms-expressions</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UI components for Umbraco Forms Expressions</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2016 Lars-Erik Aabech</copyright>
+    <tags>Umbraco Forms Expressions UFX</tags>
+    <dependencies>
+      <dependency id="Our.Umbraco.Forms.Expressions" version="1.0.0-beta" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file 
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\scripts\lib\pre-template-editor.js" 
+      target="content/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.js"/>
+    <file 
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\scripts\ufx.js" 
+      target="content/App_Plugins/UmbracoFormsExpressions/scripts/ufx.js"/>
+    <file 
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\settings\*.*" 
+      target="content/App_Plugins/UmbracoFormsExpressions/settings"/>
+    <file 
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\styles\ufx.css" 
+      target="content/App_Plugins/UmbracoFormsExpressions/styles/ufx.css"/>
+    <file 
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\package.manifest" 
+      target="content/App_Plugins/UmbracoFormsExpressions/package.manifest"/>
+  </files>
+</package>
