@@ -4,12 +4,16 @@
 
 <assignment>        ::= <assignable> <equals> <expression>
 <expression>        ::= <term> | <unary expression> | <binary expression>       # possibly introduce if
+<group expression>  ::= "(" <expression> ")"
 
 <assignable>        ::= <identifier> | <field value>
 <term>              ::= <number> | <group expression> | <assignable>
-<unary expression>  ::= <unary operator> <term>
+#<unary expression>  ::= <unary operator> <term>                                # not done yet
 <binary expression> ::= <expression> <binary operator> <expression>
-<group expression>  ::= "(" <expression> ")"
+
+<argument list>     ::= <expression> | <expression> "," <argument list>
+<function call>     ::= <function name> "(" <argument list> ")"
+<function name>     ::= "power" | "round"
 
 <unary operator>    ::= "+" | "-"
 <binary operator>   ::= "+" | "-" | "*" | "/"

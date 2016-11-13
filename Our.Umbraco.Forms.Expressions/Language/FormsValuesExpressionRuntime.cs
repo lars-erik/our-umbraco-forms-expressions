@@ -11,7 +11,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
     {
         Dictionary<string, string> functionMappings = new Dictionary<string, string>
         {
-            { "power", "Pow" }
+            { "power", "Pow" },
+            { "round", "Round" }
         }; 
 
         public Dictionary<string, Guid> Mappings;

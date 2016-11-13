@@ -53,7 +53,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
 
             argList.Rule = MakeStarRule(argList, ToTerm(","), expression);
             functionCall.Rule = functionName + "(" + argList + ")";
-            functionName.Rule = ToTerm("power");
+            functionName.Rule = ToTerm("power") | "round";
 
             binOp.Rule = ToTerm("+") | "-" | "*" | "/";
             equals.Rule = ToTerm("=");

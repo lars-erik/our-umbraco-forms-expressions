@@ -17,5 +17,13 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             var result = EvaluateValue(program);
             Assert.That(result, Is.EqualTo(1024));
         }
+
+        [Test]
+        public void Then_Rounds_Numbers()
+        {
+            var program = "x = round(5.123, 2)";
+            var result = EvaluateValue(program);
+            Assert.That(result, Is.EqualTo(5.12));
+        }
     }
 }
