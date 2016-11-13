@@ -35,6 +35,14 @@
   bottom: 52px;
   padding: 10px;
 }
+.ufx.program .parameters div {
+  margin-top: 5px;
+}
+.ufx.program .parameters label,
+.ufx.program .parameters span {
+  padding: 0;
+  display: block;
+}
 .ufx.program .fs-bar {
   position: absolute;
   left: 80px;

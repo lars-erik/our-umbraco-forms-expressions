@@ -93,6 +93,11 @@ angular.module("umbraco").requires.push("ufx");
                 var editor = args[1],
                     tokens = findTokens(editor);
 
+                // Value reset when digested for some reason. Leave it be...
+                if (tokens.length === 0) {
+                    return;
+                }
+
                 addNewTokens(tokens);
                 removeUnusedTokens(tokens);
             }

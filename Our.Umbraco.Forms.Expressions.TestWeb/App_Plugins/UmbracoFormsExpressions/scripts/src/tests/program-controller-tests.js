@@ -79,6 +79,27 @@
             ]);
         });
 
+        it("keeps values for unmodified fields", function() {
+            scope.fields = [
+                { name: "field a", value: 5 },
+                { name: "field b", value: 0 }
+            ];
+
+            lineTokens = [[
+                { type: "identifier", value: "x" },
+                { type: "operator", value: "=" },
+                { type: "support", value: "[field a]" }
+            ]];
+
+            scope.aceOpts.onChange([null, editor]);
+
+            scope.$digest();
+
+            expect(scope.fields).toEqual([
+                {name:"field a", value:5}
+            ]);
+        });
+
         it("posts program and values to server for calculation", function() {
             var response = {};
             httpMock.expectPOST("/run", {
