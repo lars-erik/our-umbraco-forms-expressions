@@ -1,0 +1,13 @@
+﻿@using Umbraco.Forms.Data.Storage
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    TempData.Keep("Forms_Current_Record_id");
+    var recordId = (Guid)TempData["Forms_Current_Record_id"];
+    var record = new RecordStorage().GetRecordByUniqueId(recordId);
+}
+
+<h1>Your loan would amount to</h1>
+<p><label>Loaned amount:</label> <span>@record.GetRecordField("loan amount").ValuesAsString()</span></p>
+<p><label>Total amount: </label> <span>@record.GetRecordField("total amount").ValuesAsString()</span></p>
+<p><label>Monthly payment: </label> <span>@record.GetRecordField("monthly payment").ValuesAsString()</span></p>

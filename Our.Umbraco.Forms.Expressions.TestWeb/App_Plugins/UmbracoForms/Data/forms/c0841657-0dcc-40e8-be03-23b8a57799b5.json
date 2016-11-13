@@ -1,5 +1,5 @@
 {
-  "name": "Loan total",
+  "name": "Loan calculator",
   "created": "2016-11-11T21:58:14.0354671+01:00",
   "pages": [
     {
@@ -122,7 +122,7 @@
                   "preValues": []
                 },
                 {
-                  "caption": "Monthly fee",
+                  "caption": "Monthly payment",
                   "tooltip": null,
                   "placeholder": null,
                   "cssClass": null,
@@ -167,7 +167,7 @@
   "requiredErrorMessage": "Please provide a value for {0}",
   "invalidErrorMessage": "Please provide a valid value for {0}",
   "messageOnSubmit": "Thank you",
-  "goToPageOnSubmit": 0,
+  "goToPageOnSubmit": 1081,
   "xPathOnSubmit": null,
   "manualApproval": false,
   "storeRecordsLocally": true,
