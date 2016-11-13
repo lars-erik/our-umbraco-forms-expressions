@@ -17,7 +17,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         {
             var program = @"x = " + value;
 
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
 
             Assert.That(result, Is.EqualTo(value));
         }

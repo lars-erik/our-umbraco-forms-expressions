@@ -21,9 +21,29 @@ namespace Our.Umbraco.Forms.Expressions.Tests
 
             AddField("field a", 0);
 
-            Evaluate(program);
+            EvaluateValue(program);
 
             Assert.That(FieldValue("field a"), Is.EqualTo(6));
+        }
+
+        [Test]
+        public void Set_Fields_Are_Reported()
+        {
+            var program = @"
+                x = 5
+                [field a] = x + 1    
+                [field b] = power([field a], 2)    
+            ";
+
+            AddField("field a", 0);
+            AddField("field b", 0);
+
+            var result = EvaluateResult(program);
+
+            Assert.That(result.SetFields,
+                Has.Exactly(1).With.Property("Key").EqualTo("field a").And.Property("Value").EqualTo(6) &
+                Has.Exactly(1).With.Property("Key").EqualTo("field b").And.Property("Value").EqualTo(36)
+                );
         }
     }
 }

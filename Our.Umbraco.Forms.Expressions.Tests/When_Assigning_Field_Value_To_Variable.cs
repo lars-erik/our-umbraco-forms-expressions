@@ -19,7 +19,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
 
             AddField("field name", value);
 
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
 
             Assert.That(result, Is.EqualTo(value));
         }

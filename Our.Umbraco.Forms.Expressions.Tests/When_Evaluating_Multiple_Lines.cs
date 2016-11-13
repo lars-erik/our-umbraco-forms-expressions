@@ -22,7 +22,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             AddField("hvor mange vil du ha", 2);
             AddField("second field", 3);
 
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
 
             Assert.That(result, Is.EqualTo(4));
         }

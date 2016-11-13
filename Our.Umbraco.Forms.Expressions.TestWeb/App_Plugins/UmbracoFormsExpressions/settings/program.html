@@ -16,8 +16,15 @@
                 </div>
             </div>
             <div class="result" ng-show="hasResult">
-                <label>Result:</label>
+                <label>Result of expression:</label>
                 {{result.Value}}
+            </div>
+            <div class="setFields" ng-show="hasResult">
+                <label>Set fields:</label>
+                <div ng-repeat="(key, value) in result.SetFields">
+                    <label>{{key}}:</label>
+                    <span>{{value}}</span>
+                </div>
             </div>
             <div class="error" ng-show="result.Errors">
                 <label>Errors:</label>

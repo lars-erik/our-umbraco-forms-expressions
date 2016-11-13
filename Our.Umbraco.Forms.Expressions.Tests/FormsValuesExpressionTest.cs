@@ -14,12 +14,18 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         private Dictionary<string, Guid> mappings;
         private Record record;
 
-        protected decimal Evaluate(string program)
+        protected decimal EvaluateValue(string program)
+        {
+            var result = EvaluateResult(program);
+            return result.Value;
+        }
+
+        protected FormsValuesResult EvaluateResult(string program)
         {
             var evaluator = new FormsValuesEvaluator(program);
             var result = evaluator.Evaluate(record, mappings);
             Assert.That(result.Errors, Is.Null, result.Errors);
-            return result.Value;
+            return result;
         }
 
         [SetUp]

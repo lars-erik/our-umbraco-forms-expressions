@@ -14,7 +14,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         public void Then_Calculates_Power()
         {
             var program = "x = power(2, 10)";
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
             Assert.That(result, Is.EqualTo(1024));
         }
     }

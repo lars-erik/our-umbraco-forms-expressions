@@ -34,29 +34,32 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 return result;
 
             var runtime = (FormsValuesExpressionRuntime)grammar.CreateRuntime(language);
+            runtime.SetFields = result.SetFields;
             runtime.Mappings = mappings;
             runtime.Record = record;
 
             var scriptApp = new ScriptApp(runtime);
-            object evaluatedValue;
+            object evaluatedValue = null;
             try
             {
                 evaluatedValue = scriptApp.Evaluate(program);
             }
             catch (Exception ex)
             {
-                return new FormsValuesResult { Errors = "Error in program. " + ex.Message };
+                result.Errors = "Error in program. " + ex.Message;
             }
 
             try
             {
                 decimal value = Convert.ToDecimal(evaluatedValue);
-                return new FormsValuesResult { Value = value };
+                result.Value = value;
             }
             catch (Exception ex)
             {
-                return new FormsValuesResult { Errors = "Result was not a decimal value. " + ex.Message };
+                result.Errors = "Result was not a decimal value. " + ex.Message;
             }
+
+            return result;
         }
 
         public FormsValuesResult Validate()

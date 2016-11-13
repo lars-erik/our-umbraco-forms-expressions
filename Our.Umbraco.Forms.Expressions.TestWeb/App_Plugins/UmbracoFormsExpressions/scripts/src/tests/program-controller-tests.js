@@ -10,6 +10,7 @@
         var scope,
             controller,
             lineTokens,
+            httpMock,
             editor = {
                 session: {
                     getLength: function () { return lineTokens.length; },
@@ -17,6 +18,9 @@
                         return lineTokens[line];
                     }
                 }
+            },
+            requestHelper = {
+                getApiUrl: function () { return "/run" }
             };
 
         beforeEach(module("umbraco"));
@@ -24,9 +28,14 @@
         beforeEach(inject([
             "$controller",
             "$rootScope",
-            function (controllerFactory, rootScope) {
+            "$httpBackend",
+            function (controllerFactory, rootScope, httpBackend) {
                 scope = rootScope.$new();
-                controller = controllerFactory("ufx.program.controller", {"$scope":scope});
+                scope.setting = {
+                    value: ""
+                };
+                controller = controllerFactory("ufx.program.controller", { "$scope": scope, "umbRequestHelper": requestHelper });
+                httpMock = httpBackend;
             }
         ]));
 
@@ -68,6 +77,27 @@
             expect(scope.fields).toEqual([
                 {name:"field a", value:0}
             ]);
+        });
+
+        it("posts program and values to server for calculation", function() {
+            var response = {};
+            httpMock.expectPOST("/run", {
+                Program: "x = [field a]",
+                Values: { "field a": 5 }
+            }).respond(200, response);
+
+            scope.setting.value = "x = [field a]";
+
+            scope.fields = [
+                { name: "field a", value: 5 }
+            ];
+
+            scope.run();
+
+            httpMock.flush();
+            httpMock.verifyNoOutstandingExpectation();
+
+            expect(scope.result).toBe(response);
         });
 
     });

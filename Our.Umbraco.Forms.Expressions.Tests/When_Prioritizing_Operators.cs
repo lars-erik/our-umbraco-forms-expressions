@@ -18,7 +18,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
 
             AddField("a field", 5);
 
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
 
             Assert.That(result, Is.EqualTo(11));
         }
@@ -30,7 +30,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
 
             AddField("a field", 5);
 
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
 
             Assert.That(result, Is.EqualTo(12));
         }

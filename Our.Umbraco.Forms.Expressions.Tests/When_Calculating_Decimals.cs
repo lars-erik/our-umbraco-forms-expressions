@@ -15,7 +15,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         {
             var program = "[input] / 2.0";
             AddField("input", 1);
-            var result = Evaluate(program);
+            var result = EvaluateValue(program);
             Assert.That(result, Is.EqualTo(0.5m));
         }
     }

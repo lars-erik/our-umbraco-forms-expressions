@@ -23,6 +23,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
         {
         }
 
+        public Dictionary<string, object> SetFields { get; set; }
+
         public override void Init()
         {
             base.Init();
@@ -78,6 +80,9 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 var fieldId = Mappings[lowerKey];
                 var field = Record.GetRecordField(fieldId);
                 field.Values = new List<object> { value };
+
+                if (SetFields != null)
+                    SetFields.Add(lowerKey, value);
             }
             catch
             {
