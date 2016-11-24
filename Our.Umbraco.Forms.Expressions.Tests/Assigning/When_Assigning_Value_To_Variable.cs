@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Our.Umbraco.Forms.Expressions.Tests
+namespace Our.Umbraco.Forms.Expressions.Tests.Assigning
 {
     [TestFixture]
     public class When_Assigning_Value_To_Variable : FormsValuesExpressionTest

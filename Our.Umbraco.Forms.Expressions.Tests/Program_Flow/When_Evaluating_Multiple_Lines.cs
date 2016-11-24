@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace Our.Umbraco.Forms.Expressions.Tests
+namespace Our.Umbraco.Forms.Expressions.Tests.Program_Flow
 {
     [TestFixture]
     public class When_Evaluating_Multiple_Lines : FormsValuesExpressionTest
