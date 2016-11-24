@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Reflection;
+using System.Threading;
 using Irony.Interpreter;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
@@ -69,14 +68,15 @@ namespace Our.Umbraco.Forms.Expressions.Language
             unOp.Rule = ToTerm("+") | "-";
             binOp.Rule = 
                 ToTerm("+") | "-" | "*" | "/" | 
-                "==" | "equals";
+                "==" | "equals" |
+                "!=" | "does not equal";
             assign.Rule = ToTerm("=");
             
         }
 
         private void Decorate()
         {
-            RegisterOperators(20, "equals", "=="); // 
+            RegisterOperators(20, "equals", "==", "does not equal", "!=");
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");
 
@@ -87,8 +87,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
             RegisterBracePair("[", "]");
 
             AddToNoReportGroup(NewLine);
-            AddTermsReportGroup("assignment operator", "=");
-            AddTermsReportGroup("comparison operator", "equals", "==");
+            AddTermsReportGroup("assignment", "=");
+            AddTermsReportGroup("equality operator", "equals", "==", "does not equal", "!=");
         }
 
         private void SetProgram()
@@ -99,7 +99,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
         private void SetupLiterals()
         {
             number.DefaultFloatType = TypeCode.Double;
-            number.DecimalSeparator = '.';
+            // TODO: Figure out how to use current culture, see "When_Comparing_Numbers"
+            number.DecimalSeparator = '.'; // Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
 
             fieldQuoted.AddStartEnd("[", "]", StringOptions.NoEscapes);
             fieldQuoted.SetOutputTerminal(this, field);
@@ -121,17 +122,5 @@ namespace Our.Umbraco.Forms.Expressions.Language
             astBuilder.BuildAst(parseTree);
         }
 
-    }
-
-    public class FormsValuesOperatorHandler : OperatorHandler
-    {
-        public FormsValuesOperatorHandler(bool caseSensitive) : base(caseSensitive)
-        {
-            OperatorInfoDictionary dict = (OperatorInfoDictionary)
-                typeof (OperatorHandler).GetField("_registeredOperators",
-                    BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
-
-            dict.Add("equals", ExpressionType.Equal, 20);
-        }
     }
 }

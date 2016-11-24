@@ -37,12 +37,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
         {
             base.InitBinaryOperatorImplementationsForMatchedTypes();
 
-            AddBinary(ExpressionType.Equal, typeof (string), CompareStrings);
-        }
-
-        private static object CompareStrings(object x, object y)
-        {
-            return (string)x == (string)y;
+            AddBinary(ExpressionType.Equal, typeof (string), (x, y) => (string)x == (string)y);
+            AddBinary(ExpressionType.NotEqual, typeof (string), (x, y) => (string)x != (string)y);
         }
 
         public override Binding Bind(BindingRequest request)

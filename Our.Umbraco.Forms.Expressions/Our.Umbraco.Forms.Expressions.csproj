@@ -294,6 +294,7 @@
     <Compile Include="Language\FormsValuesEvaluator.cs" />
     <Compile Include="Language\FormsValuesExpressionGrammar.cs" />
     <Compile Include="Language\FormsValuesExpressionRuntime.cs" />
+    <Compile Include="Language\FormsValuesOperatorHandler.cs" />
     <Compile Include="Language\FormsValuesResult.cs" />
     <Compile Include="Language\FunctionNameNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

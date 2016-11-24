@@ -157,7 +157,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparison\When_Comparing_Strings_To_Fields.cs" />
+    <Compile Include="Comparison\ComparisonTest.cs" />
+    <Compile Include="Comparison\When_Combining_Comparisons.cs" />
+    <Compile Include="Comparison\When_Comparing_Numbers.cs" />
+    <Compile Include="Comparison\When_Comparing_Strings.cs" />
     <Compile Include="FormsValuesExpressionTest.cs" />
     <Compile Include="Assigning\When_Assigning_Negative_Values.cs" />
     <Compile Include="Assigning\When_Assigning_Value_To_Field.cs" />
