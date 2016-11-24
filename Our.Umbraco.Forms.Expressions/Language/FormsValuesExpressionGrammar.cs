@@ -69,13 +69,16 @@ namespace Our.Umbraco.Forms.Expressions.Language
             binOp.Rule = 
                 ToTerm("+") | "-" | "*" | "/" | 
                 "==" | "equals" |
-                "!=" | "does not equal";
+                "!=" | "does not equal" |
+                "and" | "or";
+                
             assign.Rule = ToTerm("=");
             
         }
 
         private void Decorate()
         {
+            RegisterOperators(15, "and", "or");
             RegisterOperators(20, "equals", "==", "does not equal", "!=");
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");

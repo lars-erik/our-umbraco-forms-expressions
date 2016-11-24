@@ -16,10 +16,11 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Comparison
         public static void SetupCulture()
         {
             // TODO: Figure out why , messes up when decimal separator
-            //Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         [Test]
+        [TestCase(1, "==", 1, true)]
         [TestCase(123.1, "==", 123.1, true)]
         [TestCase(1.5, "equals", 1.5, true)]
         [TestCase(123.1, "==", 123.2, false)]
