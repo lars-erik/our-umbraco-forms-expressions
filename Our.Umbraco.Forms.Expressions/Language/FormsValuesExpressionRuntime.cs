@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Irony.Interpreter;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
@@ -32,6 +33,18 @@ namespace Our.Umbraco.Forms.Expressions.Language
             BuiltIns.ImportStaticMembers(typeof(Math));
         }
 
+        public override void InitBinaryOperatorImplementationsForMatchedTypes()
+        {
+            base.InitBinaryOperatorImplementationsForMatchedTypes();
+
+            AddBinary(ExpressionType.Equal, typeof (string), CompareStrings);
+        }
+
+        private static object CompareStrings(object x, object y)
+        {
+            return (string)x == (string)y;
+        }
+
         public override Binding Bind(BindingRequest request)
         {
             var sym = request.Symbol.ToLower();
@@ -50,7 +63,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 {
                     var fieldId = Mappings[lowerKey];
                     var field = Record.GetRecordField(fieldId);
-                    var value = Convert.ToDouble(field.ValuesAsString());
+                    var value = field.Values[0];
                     return new ConstantBinding(value, new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
                 }
                 catch

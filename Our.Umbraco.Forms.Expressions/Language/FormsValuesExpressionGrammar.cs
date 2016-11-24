@@ -1,5 +1,6 @@
 ﻿using System;
-using Irony.Ast;
+using System.Linq.Expressions;
+using System.Reflection;
 using Irony.Interpreter;
 using Irony.Interpreter.Ast;
 using Irony.Parsing;
@@ -8,49 +9,56 @@ namespace Our.Umbraco.Forms.Expressions.Language
 {
     public class FormsValuesExpressionGrammar : InterpretedLanguageGrammar
     {
+        #region Terminals
+        private readonly NonTerminal program = new NonTerminal("program", typeof(StatementListNode));
+        private readonly NonTerminal statement = new NonTerminal("statement");
+
+        private readonly NonTerminal assignment = new NonTerminal("assignment", typeof(AssignmentNode));
+        private readonly NonTerminal expression = new NonTerminal("expression");
+
+        private readonly NonTerminal assignable = new NonTerminal("assignable");
+        private readonly NonTerminal term = new NonTerminal("term");
+        private readonly NonTerminal unExpr = new NonTerminal("unExpr", typeof(UnaryOperationNode));
+        private readonly NonTerminal binExpr = new NonTerminal("binExpr", typeof(BinaryOperationNode));
+        private readonly NonTerminal groupExpr = new NonTerminal("groupExpr");
+
+        private readonly NonTerminal argList = new NonTerminal("argList", typeof(ExpressionListNode));
+        private readonly NonTerminal functionCall = new NonTerminal("functionCall", typeof(FunctionCallNode));
+        private readonly NonTerminal functionName = new NonTerminal("functionName", typeof(FunctionNameNode));
+
+        private readonly NonTerminal binOp = new NonTerminal("binOp", "operator");
+        private readonly NonTerminal unOp = new NonTerminal("unOp");
+        private readonly NonTerminal assign = new NonTerminal("assign", "assignment operator");
+        #endregion
+
+        #region Literals
+        private readonly FieldTerminal field = new FieldTerminal("field");
+        private readonly IdentifierTerminal identifier = new IdentifierTerminal("identifier");
+        private readonly NumberLiteral number = new NumberLiteral("number");
+        private readonly StringLiteral fieldQuoted = new StringLiteral("field_quoted");
+        private readonly StringLiteral stringQuoted = new StringLiteral("string_quoted");
+        #endregion
+
         public FormsValuesExpressionGrammar() : base(false)
         {
-            var program = new NonTerminal("program", typeof(StatementListNode));
-            var statement = new NonTerminal("statement");
+            SetupLiterals();
+            BuildLanguage();
+            SetProgram();
+            Decorate();
+        }
 
-            var assignment = new NonTerminal("assignment", typeof(AssignmentNode));
-            var expression = new NonTerminal("expression");
-
-            var assignable = new NonTerminal("assignable");
-            var term = new NonTerminal("term");
-            var unExpr = new NonTerminal("unExpr", typeof(UnaryOperationNode));
-            var binExpr = new NonTerminal("binExpr", typeof(BinaryOperationNode));
-            var groupExpr = new NonTerminal("groupExpr");
-
-            var argList = new NonTerminal("argList", typeof(ExpressionListNode));
-            var functionCall = new NonTerminal("functionCall", typeof(FunctionCallNode));
-            var functionName = new NonTerminal("functionName", typeof(FunctionNameNode));
-
-            var binOp = new NonTerminal("binOp", "operator");
-            var unOp = new NonTerminal("unOp");
-            var equals = new NonTerminal("equals", "assignment op");
-
-            var field = new FieldTerminal("field");
-            var identifier = new IdentifierTerminal("identifier");
-            var number = new NumberLiteral("number");
-            number.DefaultFloatType = TypeCode.Double;
-            number.DecimalSeparator = '.';
-
-            StringLiteral fieldQuoted = new StringLiteral("field_quoted");
-            fieldQuoted.AddStartEnd("[", "]", StringOptions.NoEscapes);
-            fieldQuoted.AddStartEnd("\"", StringOptions.NoEscapes);
-            fieldQuoted.SetOutputTerminal(this, field);
-
+        private void BuildLanguage()
+        {
             program.Rule = MakePlusRule(program, NewLine, statement);
 
             statement.Rule = assignment | expression | Empty;
 
-            assignment.Rule = assignable + equals + expression;
+            assignment.Rule = assignable + assign + expression;
             expression.Rule = term | binExpr | unExpr;
             groupExpr.Rule = "(" + expression + ")";
 
             assignable.Rule = identifier | field | functionCall;
-            term.Rule = number | assignable | groupExpr; //  
+            term.Rule = number | stringQuoted | assignable | groupExpr; //  
             binExpr.Rule = expression + binOp + expression;
             unExpr.Rule = unOp + term + ReduceHere();
 
@@ -59,23 +67,44 @@ namespace Our.Umbraco.Forms.Expressions.Language
             functionName.Rule = ToTerm("power") | "round";
 
             unOp.Rule = ToTerm("+") | "-";
-            binOp.Rule = ToTerm("+") | "-" | "*" | "/";
-            equals.Rule = ToTerm("=");
+            binOp.Rule = 
+                ToTerm("+") | "-" | "*" | "/" | 
+                "==" | "equals";
+            assign.Rule = ToTerm("=");
+            
+        }
 
-            Root = program;
-
+        private void Decorate()
+        {
+            RegisterOperators(20, "equals", "=="); // 
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");
 
-            MarkTransient(statement, expression, groupExpr, term, equals, unOp, binOp, assignable);
+            MarkTransient(statement, expression, groupExpr, term, assign, unOp, binOp, assignable);
 
             MarkPunctuation("(", ")", "[", "]");
             RegisterBracePair("(", ")");
             RegisterBracePair("[", "]");
 
             AddToNoReportGroup(NewLine);
-            AddTermsReportGroup("assignment op", "=");
+            AddTermsReportGroup("assignment operator", "=");
+            AddTermsReportGroup("comparison operator", "equals", "==");
+        }
 
+        private void SetProgram()
+        {
+            Root = program;
+        }
+
+        private void SetupLiterals()
+        {
+            number.DefaultFloatType = TypeCode.Double;
+            number.DecimalSeparator = '.';
+
+            fieldQuoted.AddStartEnd("[", "]", StringOptions.NoEscapes);
+            fieldQuoted.SetOutputTerminal(this, field);
+
+            stringQuoted.AddStartEnd("\"", StringOptions.NoEscapes);
         }
 
         public override LanguageRuntime CreateRuntime(LanguageData language)
@@ -85,27 +114,24 @@ namespace Our.Umbraco.Forms.Expressions.Language
 
         public override void BuildAst(LanguageData language, ParseTree parseTree)
         {
-            var opHandler = new OperatorHandler(language.Grammar.CaseSensitive);
+            var opHandler = new FormsValuesOperatorHandler(language.Grammar.CaseSensitive);
             Util.Check(!parseTree.HasErrors(), "ParseTree has errors, cannot build AST.");
             var astContext = new FormsValuesAstContext(language, opHandler);
             var astBuilder = new FormsValuesAstBuilder(astContext);
             astBuilder.BuildAst(parseTree);
         }
+
     }
 
-    public class FunctionNameNode : IdentifierNode
+    public class FormsValuesOperatorHandler : OperatorHandler
     {
-        public override void Init(AstContext context, ParseTreeNode treeNode)
+        public FormsValuesOperatorHandler(bool caseSensitive) : base(caseSensitive)
         {
-            this.Term = treeNode.Term;
-            Span = treeNode.Span;
-            ErrorAnchor = this.Location;
-            treeNode.AstNode = this;
-            AsString = (Term == null ? this.GetType().Name : Term.Name);
+            OperatorInfoDictionary dict = (OperatorInfoDictionary)
+                typeof (OperatorHandler).GetField("_registeredOperators",
+                    BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
 
-            Symbol = treeNode.ChildNodes[0].Token.ValueString;
-            AsString = Symbol;
+            dict.Add("equals", ExpressionType.Equal, 20);
         }
     }
-
 }

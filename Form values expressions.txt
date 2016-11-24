@@ -15,10 +15,13 @@
 <argument list>     ::= <expression> | <expression> "," <argument list>
 <function name>     ::= "power" | "round"
 
+<assign>            ::= "="
 <unary operator>    ::= "+" | "-"
-<binary operator>   ::= "+" | "-" | "*" | "/"
-<equals>            ::= "="
+<binary operator>   ::= "+" | "-" | "*" | "/" | <equality>
+<equality>          ::= "equals" | "=="
 
 <field value>       ::= "[" <field name> "]"
 <field name>        ::= # name of field, incl. spaces
 <identifier>        ::= # one word identifier, variable
+<string>            ::= '"' {text} '"' | "'" {text} "'"
+<number>            ::= 0-9*

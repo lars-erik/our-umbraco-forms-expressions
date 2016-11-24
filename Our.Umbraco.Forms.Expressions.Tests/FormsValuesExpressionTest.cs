@@ -14,7 +14,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         private Dictionary<string, Guid> mappings;
         private Record record;
 
-        protected decimal EvaluateValue(string program)
+        protected object EvaluateValue(string program)
         {
             var result = EvaluateResult(program);
             return result.Value;
@@ -35,7 +35,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             mappings = new Dictionary<string, Guid>();
         }
 
-        protected void AddField(string fieldName, int value)
+        protected void AddField(string fieldName, object value)
         {
             var fieldId = CreateMapping(fieldName);
             AddField(fieldId, value);
@@ -48,7 +48,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             return fieldId;
         }
 
-        private void AddField(Guid fieldId, int value)
+        private void AddField(Guid fieldId, object value)
         {
             record.RecordFields.Add(fieldId, new RecordField {Values = new List<object> {value}});
         }

@@ -4,7 +4,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
 {
     public class FormsValuesResult
     {
-        public decimal Value { get; set; }
+        public object Value { get; set; }
         public string Errors { get; set; }
         public Dictionary<string, object> SetFields { get; private set; }
 

@@ -49,15 +49,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 result.Errors = "Error in program. " + ex.Message;
             }
 
-            try
-            {
-                decimal value = Convert.ToDecimal(evaluatedValue);
-                result.Value = value;
-            }
-            catch (Exception ex)
-            {
-                result.Errors = "Result was not a decimal value. " + ex.Message;
-            }
+            result.Value = evaluatedValue;
 
             return result;
         }
@@ -70,7 +62,16 @@ namespace Our.Umbraco.Forms.Expressions.Language
             var tree = parser.Parse(program);
 
             if (tree.ParserMessages.Any(m => m.Level == ErrorLevel.Error))
-                return new FormsValuesResult {Errors = String.Join(", ", tree.ParserMessages.Select(m => m.Message))};
+            { 
+                return new FormsValuesResult
+                {
+                    Errors = String.Join(", ", 
+                        tree.ParserMessages.Select(m =>
+                            $"{m.Location.Line + 1},{m.Location.Column + 1}: {m.Message}"
+                        )
+                    )
+                };
+            }
 
             return new FormsValuesResult();
         }
