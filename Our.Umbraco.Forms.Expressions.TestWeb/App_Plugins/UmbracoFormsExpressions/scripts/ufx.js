@@ -180,7 +180,7 @@ define("ace/mode/forms_highlight_rules", ["require", "exports", "module", "ace/l
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }, {
                 token: "support",
-                regex: "\\[[^\\\"\\]]*\\b\\]"
+                regex: "\\[[^\\]]+\\]"
             }, {
                 token: keywordMapper,
                 regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
