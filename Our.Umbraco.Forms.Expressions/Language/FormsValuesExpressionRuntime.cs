@@ -13,7 +13,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
         Dictionary<string, string> functionMappings = new Dictionary<string, string>
         {
             { "power", "Pow" },
-            { "round", "Round" }
+            { "round", "Round" },
+            { "isblank", "IsBlank" }
         }; 
 
         public Dictionary<string, Guid> Mappings;
@@ -31,6 +32,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
         {
             base.Init();
             BuiltIns.ImportStaticMembers(typeof(Math));
+            BuiltIns.Add("ifblank", new ClrMethodBindingTargetInfo(GetType(), "IfBlank", this));
         }
 
         public override void InitBinaryOperatorImplementationsForMatchedTypes()
@@ -98,6 +100,15 @@ namespace Our.Umbraco.Forms.Expressions.Language
             {
                 throw new Exception("Could not bind field name " + lowerKey + " to a floating point value.");
             }
+        }
+
+        private object IfBlank(object value, object alternativeValue)
+        {
+            if (value == null || "".Equals(value))
+            {
+                return alternativeValue;
+            }
+            return value;
         }
     }
 

@@ -1,19 +1,22 @@
 <program>           ::= <statement> | <statement> <program>
 
-<statement>         ::= <assignment> | <expression> | <empty>
+<statement>         ::= <assignment> | <expression> | <ifBlock> | <empty>
+
+<ifBlock>           ::= "if" <expression> <program> "end" | "if" <expression> <program> "else" <program> "end"
 
 <assignment>        ::= <assignable> <equals> <expression>
 <expression>        ::= <term> | <unary expression> | <binary expression>
 <group expression>  ::= "(" <expression> ")"
 
 <assignable>        ::= <identifier> | <field value>
-<term>              ::= <number> | <group expression> | <assignable>
+<term>              ::= <number> | <group expression> | <assignable> | <boolean>
 <unary expression>  ::= <unary operator> <term>
 <binary expression> ::= <expression> <binary operator> <expression>
 
 <function call>     ::= <function name> "(" <argument list> ")"
 <argument list>     ::= <expression> | <expression> "," <argument list>
-<function name>     ::= "power" | "round"
+<function name>     ::= "power" | "round" |
+                        "ifblank"
 
 <assign>            ::= "="
 <unary operator>    ::= "+" | "-"
@@ -25,3 +28,4 @@
 <identifier>        ::= # one word identifier, variable
 <string>            ::= '"' {text} '"' | "'" {text} "'"
 <number>            ::= 0-9*
+<boolean>           ::= true | false
