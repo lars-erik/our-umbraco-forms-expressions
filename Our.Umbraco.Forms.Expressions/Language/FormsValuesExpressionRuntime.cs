@@ -61,7 +61,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 {
                     var fieldId = Mappings[lowerKey];
                     var field = Record.GetRecordField(fieldId);
-                    var value = field.Values[0];
+                    var value = TryConvertToNumber(field);
+
                     return new ConstantBinding(value, new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
                 }
                 catch
@@ -71,6 +72,25 @@ namespace Our.Umbraco.Forms.Expressions.Language
             }
 
             return base.BindSymbolForRead(request);
+        }
+
+        private static object TryConvertToNumber(RecordField field)
+        {
+            var value = field.Values[0];
+            var stringValue = value as string;
+
+            if (!String.IsNullOrWhiteSpace(stringValue))
+            {
+                double asDouble;
+                //int asInt;
+
+                //if (int.TryParse(stringValue, out asInt))
+                //    value = asInt;
+                //else 
+                if (double.TryParse(stringValue, out asDouble))
+                    value = asDouble;
+            }
+            return value;
         }
 
         public override Binding BindSymbolForWrite(BindingRequest request)
@@ -98,7 +118,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             }
             catch
             {
-                throw new Exception("Could not bind field name " + lowerKey + " to a floating point value.");
+                throw new Exception("Could not bind field name " + lowerKey + ".");
             }
         }
 

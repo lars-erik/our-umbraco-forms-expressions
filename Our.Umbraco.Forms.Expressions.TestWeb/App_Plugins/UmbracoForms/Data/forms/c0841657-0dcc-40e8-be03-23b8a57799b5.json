@@ -43,7 +43,7 @@
                 },
                 {
                   "caption": "Interest",
-                  "tooltip": null,
+                  "tooltip": "Defaults to 3.4 if left empty",
                   "placeholder": null,
                   "cssClass": null,
                   "alias": "interest",
@@ -63,7 +63,7 @@
                     "rules": []
                   },
                   "settings": {
-                    "DefaultValue": "3.4",
+                    "DefaultValue": "",
                     "Placeholder": ""
                   },
                   "preValues": []

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Our.Umbraco.Forms.Expressions.Language;
+using Umbraco.Core.Logging;
 using Umbraco.Forms.Core;
 using Umbraco.Forms.Core.Attributes;
 using Umbraco.Forms.Core.Enums;
@@ -29,7 +30,10 @@ namespace Our.Umbraco.Forms.Expressions.Workflows
             var evaluator = new FormsValuesEvaluator(Program);
             var result = evaluator.Evaluate(record, mappings);
             if (result.Errors != null)
+            {
+                LogHelper.Error<UmbracoFormsExpressionWorkflowType>(String.Join(", ", result.Errors), new Exception("Failed to execute program")); 
                 return WorkflowExecutionStatus.Failed;
+            }
 
             return WorkflowExecutionStatus.Completed;
         }
