@@ -16,6 +16,7 @@
 <function call>     ::= <function name> "(" <argument list> ")"
 <argument list>     ::= <expression> | <expression> "," <argument list>
 <function name>     ::= "power" | "round" |
+                        "ceiling" | "floor" |
                         "ifblank"
 
 <assign>            ::= "="

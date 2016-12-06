@@ -14,6 +14,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
         {
             { "power", "Pow" },
             { "round", "Round" },
+            { "ceiling", "Ceiling" },
+            { "floor", "Floor" },
             { "isblank", "IsBlank" }
         }; 
 
