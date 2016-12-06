@@ -7,12 +7,5 @@
             "../our.umbraco.forms.expressions.ui/editor/scripts/mode-forms.js"
         ],
         "outputFileName": "app_plugins/umbracoformsexpressions/scripts/ufx.js"
-    },
-    {
-        "inputFiles": [
-            "../our.umbraco.forms.expressions.ui/editor/scripts/lib/ace-bundle.js",
-            "../our.umbraco.forms.expressions.ui/scripts/umbraco/aceeditor.directive.js"
-        ],
-        "outputFileName": "app_plugins/umbracoformsexpressions/scripts/lib/pre-template-editor.js"
     }
 ]

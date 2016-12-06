@@ -92,6 +92,10 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 if (double.TryParse(stringValue, out asDouble))
                     value = asDouble;
             }
+            else if (value is int)
+            {
+                value = (double)(int)value;
+            }
             return value;
         }
 
