@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="umbraco">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,34 +29,82 @@
             padding: 10px;
         }
 
+        #parameters label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
         #errors {
             color: red;
+        }
+
+        input {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 5px;
         }
 
         label {
             display: block;
         }
+
+        .fs-bar {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 20%;
+        }
+
+        .gutter {
+            padding: 10px;
+        }
+
+        #editor .ace_variable.ace_parameter {
+            color: #9B859D;
+        }
     </style>
 </head>
 <body>
-
-<pre id="editor">
-x = [field name] * 2
-y = x + 1
-</pre>
-    <div id="parameters">
-        <b>Parameters</b>
-        <div id="parameterContainer"></div>
-        <button type="button" id="runBtn">Run</button>
-        <div id="result"></div>
-        <div id="errors"></div>
+    <div ng-init="setting = {value:'x = [x]\n[y] = x + 1'}">
+        <div ng-controller="ufx.program.controller">
+            <pre ng-model="setting.value" id="editor" umb-ace-editor="{mode:'forms',theme:'twilight',onChange:populateFields, require:['ace/ext/language_tools'], advanced: {enableBasicAutocompletion:true, enableLiveAutocompletion: true}}" class="fs-editor"></pre>
+            <div id="parameters">
+                <div>
+                    <b>Parameters</b>
+                </div>
+                <div>
+                    <div ng-repeat="field in fields">
+                        <label>{{field.name}}</label>
+                        <input type="number" ng-model="field.value" ufx-field-animation="{{field.name}}" />
+                    </div>
+                </div>
+                <div class="result" ng-show="hasResult">
+                    <label>Result</label>
+                    <span>{{result.Value}}</span>
+                </div>
+                <div id="errors" ng-show="result.Errors">
+                    <span>{{result.Errors}}</span>
+                </div>
+            </div>
+            <div class="fs-bar">
+                <div class="gutter">
+                    <button class="btn" ng-click="run()">Run</button>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="Scripts/lib/jquery.js"></script>
+    <script src="Scripts/lib/jquery-ui.js"></script>
     <script src="../Scripts/angular.js"></script>
     <script src="Scripts/lib/ace-bundle.js" type="text/javascript" charset="utf-8"></script>
     <script src="Scripts/mode-forms.js" type="text/javascript" charset="utf-8"></script>
-    <script src="Scripts/lib/jquery.js"></script>
-    <script>
+    <script src="Scripts/strapper.js"></script>
+    <script src="../Scripts/umbraco/aceeditor.directive.js"></script>
+    <script src="Scripts/ufx-field-animation-directive.js"></script>
+    <script src="Scripts/program-controller.js"></script>
+    <!--<script>
         function populateFields(e) {
             var tokens = [],
                 rowTokens,
@@ -138,7 +186,7 @@ y = x + 1
                 });
             });
 
-    </script>
+    </script>-->
 
 </body>
 </html>

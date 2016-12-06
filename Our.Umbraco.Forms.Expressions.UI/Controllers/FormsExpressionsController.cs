@@ -28,6 +28,13 @@ namespace Our.Umbraco.Forms.Expressions.UI.Controllers
             return Evaluate(programRequest.Program);
         }
 
+        [HttpGet]
+        [Route("api/formsexpressions/echo/{input}")]
+        public string Echo(string input)
+        {
+            return input;
+        }
+
         protected FormsValuesResult Evaluate(string program)
         {
             var evaluator = new FormsValuesEvaluator(program);

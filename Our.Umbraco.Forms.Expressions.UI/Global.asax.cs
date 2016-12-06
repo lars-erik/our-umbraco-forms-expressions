@@ -21,7 +21,7 @@ namespace Our.Umbraco.Forms.Expressions.UI
         private static void SetupWebApiRoutes(HttpConfiguration c)
         {
             c.MapHttpAttributeRoutes();
-            c.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            //c.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new Pa();
         }
 
     }

@@ -184,8 +184,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Editor\Scripts\lib\jquery-ui.js" />
+    <Content Include="Editor\Scripts\lib\jquery-ui.min.js">
+      <DependentUpon>jquery-ui.js</DependentUpon>
+    </Content>
+    <Content Include="Editor\Scripts\program-controller.js" />
     <Content Include="Editor\Scripts\strapper.js" />
     <Content Include="Editor\Scripts\test\directive-test-controller.js" />
+    <Content Include="Editor\Scripts\ufx-field-animation-directive.js" />
     <Content Include="Editor\umb-directive-test.html" />
     <Content Include="Global.asax" />
     <Content Include="packages.config">

@@ -3,6 +3,7 @@
     "private": true,
     "dependencies": {
         "ace-builds": "1.2.5",
-        "jQuery": "3.1.1"
+        "jQuery": "3.1.1",
+        "jquery-ui": "1.12.1"
     }
 }

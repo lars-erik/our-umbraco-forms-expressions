@@ -17,7 +17,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             { "ceiling", "Ceiling" },
             { "floor", "Floor" },
             { "isblank", "IsBlank" }
-        }; 
+        };
 
         public Dictionary<string, Guid> Mappings;
         public Record Record;
@@ -57,7 +57,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
         public override Binding BindSymbolForRead(BindingRequest request)
         {
             var lowerKey = request.Symbol.ToLower();
-            if (Mappings.ContainsKey(lowerKey))
+            if (request.FromNode.Term is FieldTerminal && Mappings.ContainsKey(lowerKey))
             {
                 try
                 {
@@ -65,12 +65,20 @@ namespace Our.Umbraco.Forms.Expressions.Language
                     var field = Record.GetRecordField(fieldId);
                     var value = TryConvertToNumber(field);
 
-                    return new ConstantBinding(value, new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
+                    return new ConstantBinding(value,
+                        new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
                 }
                 catch
                 {
                     throw new Exception("Could not bind field name " + lowerKey + " to a floating point value.");
                 }
+            }
+            if (request.FromNode.Term is IdentifierTerminal)
+            {
+                if (variables.ContainsKey(lowerKey))
+                    return new ConstantBinding(variables[lowerKey], new BindingTargetInfo(request.Symbol, BindingTargetType.ClrInterop));
+                throw new Exception("Variable " + lowerKey + " is not set to a value.");
+
             }
 
             return base.BindSymbolForRead(request);
@@ -102,9 +110,13 @@ namespace Our.Umbraco.Forms.Expressions.Language
         public override Binding BindSymbolForWrite(BindingRequest request)
         {
             var lowerKey = request.Symbol.ToLower();
-            if (Mappings.ContainsKey(lowerKey))
+            if (request.FromNode.Term is FieldTerminal && Mappings.ContainsKey(lowerKey))
             {
                 return new FieldBinding(request.Symbol, BindingTargetType.ClrInterop, SetField);
+            }
+            if (request.FromNode.Term is IdentifierTerminal)
+            {
+                return new FieldBinding(request.Symbol, BindingTargetType.ClrInterop, SetVariable);
             }
 
             return base.BindSymbolForWrite(request);
@@ -125,6 +137,22 @@ namespace Our.Umbraco.Forms.Expressions.Language
             catch
             {
                 throw new Exception("Could not bind field name " + lowerKey + ".");
+            }
+        }
+
+        private void SetVariable(ScriptThread thread, object value)
+        {
+            var lowerKey = thread.CurrentNode.AsString.ToLower();
+            try
+            {
+                if (variables.ContainsKey(lowerKey))
+                    variables[lowerKey] = value;
+                else
+                    variables.Add(lowerKey, value);
+            }
+            catch
+            {
+                throw new Exception("Could not bind variable name " + lowerKey + ".");
             }
         }
 

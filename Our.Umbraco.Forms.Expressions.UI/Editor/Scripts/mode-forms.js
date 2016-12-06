@@ -7,26 +7,25 @@
     var FormsHighlightRules = function () {
 
         var keywords = (
-            ""
+            "if|else|end"
         );
 
         var builtinConstants = (
-            ""
+            "true|false"
         );
 
         var builtinFunctions = (
-            "ceiling|floor|abs"
+            "power|ceiling|floor|round|ifblank"
         );
 
         var dataTypes = (
-            ""
+            ".+|\\[.+\\]"
         );
 
         var keywordMapper = this.createKeywordMapper({
-            "support.function": builtinFunctions
-            //,
-            //"keyword": keywords,
-            //"constant.language": builtinConstants,
+            "support.function": builtinFunctions,
+            "keyword": keywords,
+            "constant.language": builtinConstants
             //"storage.type": dataTypes
         }, "variable.other", true);
 
@@ -35,11 +34,14 @@
                 token: "constant.numeric", // float
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }, {
-                token: "support",
+                token: "variable.parameter",
                 regex: "\\[[^\\]]+\\]"
             }, {
                 token: keywordMapper,
                 regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
+            }, {
+                token: "variable.other",
+                regex: "\w+"
             }, {
                 token: "keyword.operator",
                 regex: "\\+|\\-|\\/|\\*|="
