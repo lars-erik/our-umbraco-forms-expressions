@@ -44,7 +44,7 @@ namespace Our.Umbraco.Forms.Expressions.Tests
         private Guid CreateMapping(string fieldName)
         {
             var fieldId = Guid.NewGuid();
-            mappings.Add(fieldName, fieldId);
+            mappings.Add(fieldName.ToLower(), fieldId);
             return fieldId;
         }
 

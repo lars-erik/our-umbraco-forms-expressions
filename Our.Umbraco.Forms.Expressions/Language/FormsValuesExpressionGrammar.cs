@@ -81,6 +81,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             argList.Rule = MakeStarRule(argList, ToTerm(","), expression);
             functionCall.Rule = functionName + "(" + argList + ")";
             functionName.Rule = ToTerm("power") | "round" | 
+                                "ceiling" | "floor" |
                                 "ifblank";
 
             unOp.Rule = ToTerm("+") | "-";

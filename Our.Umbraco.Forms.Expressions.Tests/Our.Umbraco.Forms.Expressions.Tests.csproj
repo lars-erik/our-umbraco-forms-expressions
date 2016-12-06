@@ -162,6 +162,7 @@
     <Compile Include="Comparison\When_Comparing_Numbers.cs" />
     <Compile Include="Comparison\When_Comparing_Strings.cs" />
     <Compile Include="Conversions\When_Reading_String_Fields.cs" />
+    <Compile Include="Encoding\When_Reading_Fields_With_Special_Characters.cs" />
     <Compile Include="FormsValuesExpressionTest.cs" />
     <Compile Include="Assigning\When_Assigning_Negative_Values.cs" />
     <Compile Include="Assigning\When_Assigning_Value_To_Field.cs" />

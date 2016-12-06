@@ -20,5 +20,13 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Math
             var result = EvaluateValue(program);
             Assert.That(result, Is.EqualTo(5.12));
         }
+
+        [Test]
+        public void Then_Ceils_Numbers()
+        {
+            var program = "x = ceiling(5.123)";
+            var result = EvaluateValue(program);
+            Assert.That(result, Is.EqualTo(6));
+        }
     }
 }
