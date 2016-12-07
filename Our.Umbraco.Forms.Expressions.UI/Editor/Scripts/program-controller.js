@@ -1,27 +1,83 @@
-﻿(function() {
+﻿(function () {
+
     angular.module("ufx").controller("ufx.program.controller", [
         "$scope",
         "$http",
         "umbRequestHelper",
         function (scope, http, requestHelper) {
             var urlKey = "ufx-program-evaluator",
-                runUrl = requestHelper.getApiUrl(urlKey, "Run");
+                runUrl = requestHelper.getApiUrl(urlKey, "Run"),
+                completers = {},
+                langTools = ace.require("ace/ext/language_tools");
+
+            completers.fieldCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var tokenAt = session.getTokenAt(pos.row, pos.col),
+                        isInside = tokenAt && tokenAt.type === "variable.parameter";
+                    var fields = scope.fields.map(function(f) {
+                        return {
+                            caption: f.name,
+                            value: isInside ? f.name : "[" + f.name + "]",
+                            meta: "field",
+                            type: "variable.parameter",
+                            score: 100
+                        }
+                    });
+                    callback(null, fields);
+                }
+            };
+
+            completers.variableCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var variables = findTokens(editor, "variable.other");
+                    var completions = variables.map(function (v) {
+                        return {
+                            caption: v.value,
+                            value: v.value,
+                            meta: "variable",
+                            type: "variable.other",
+                            score: 100
+                        }
+                    });
+                    callback(null, completions);
+                }
+            };
+
+            completers.functionCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var functions = session.getMode().$highlightRules.functions.map(function(f) {
+                        return {
+                            caption: f + "()",
+                            value: f,
+                            meta: "function",
+                            type: "support.function"
+                        }
+                    });
+                    callback(null, functions);
+                }
+            };
+
+            function setupCompletion() {
+                langTools.setCompleters([langTools.keyWordCompleter, completers.fieldCompleter, completers.variableCompleter, completers.functionCompleter]);
+            }
 
             function fieldIsForToken(field, token) {
                 return token.value.toLowerCase() === "[" + field.name.toLowerCase() + "]";
             }
 
-            function findTokens(editor) {
+            function findTokens(editor, tokenType) {
                 var lines = editor.session.getLength(),
                     lineTokens,
                     tokens = [],
                     i,
                     j;
 
+                tokenType = tokenType || "variable.parameter";
+
                 for (i = 0; i < lines; i++) {
                     lineTokens = editor.session.getTokens(i);
                     for (j = 0; j < lineTokens.length; j++) {
-                        if (lineTokens[j].type === "variable.parameter") {
+                        if (lineTokens[j].type === tokenType) {
                             tokens.push(lineTokens[j]);
                         }
                     }
@@ -130,6 +186,7 @@
                 onChange: populateFields
             }
 
+            setupCompletion();
         }
     ]);
 }());

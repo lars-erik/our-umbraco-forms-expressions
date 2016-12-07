@@ -23,10 +23,8 @@
         );
 
         var keywordMapper = this.createKeywordMapper({
-            "support.function": builtinFunctions,
             "keyword": keywords,
             "constant.language": builtinConstants
-            //"storage.type": dataTypes
         }, "variable.other", true);
 
         this.$rules = {
@@ -35,7 +33,10 @@
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }, {
                 token: "variable.parameter",
-                regex: "\\[[^\\]]+\\]"
+                regex: "\\[[^\\]]*\\]"
+            }, {
+                token: "support.function",
+                regex: builtinFunctions
             }, {
                 token: keywordMapper,
                 regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
@@ -56,7 +57,10 @@
                 regex: "\\s+"
             }]
         };
+
         this.normalizeRules();
+
+        this.functions = builtinFunctions.split("|");
     };
 
     oop.inherits(FormsHighlightRules, TextHighlightRules);
@@ -64,7 +68,7 @@
     exports.FormsHighlightRules = FormsHighlightRules;
 });
 
-define("ace/mode/forms", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/forms_highlight_rules"], function (require, exports, module) {
+define("ace/mode/forms", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/forms_highlight_rules", "ace/ext/language_tools"], function (require, exports, module) {
 
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
