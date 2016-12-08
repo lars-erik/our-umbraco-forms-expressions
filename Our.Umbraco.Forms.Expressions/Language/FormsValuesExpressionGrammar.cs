@@ -88,11 +88,11 @@ namespace Our.Umbraco.Forms.Expressions.Language
             binOp.Rule = 
                 ToTerm("+") | "-" | "*" | "/" | 
                 "==" | "equals" |
-                "!=" | "does not equal" |
-                "<" | "is less than" |
-                ">" | "is greater than" |
-                "<=" | "is less than or equal to" |
-                ">=" | "is greater than or equal to" |
+                "!=" | "does not equal" + ReduceHere() |
+                "<" | "is less than" + ReduceHere() |
+                ">" | "is greater than" + ReduceHere() |
+                "<=" | "is less than or equal to" + ReduceHere() |
+                ">=" | "is greater than or equal to" + ReduceHere() |
                 "and" | "or";
                 
             assign.Rule = ToTerm("=");
@@ -102,7 +102,14 @@ namespace Our.Umbraco.Forms.Expressions.Language
         private void Decorate()
         {
             RegisterOperators(15, "and", "or");
-            RegisterOperators(20, "equals", "==", "does not equal", "!=");
+            RegisterOperators(20, 
+                "equals", "==", 
+                "does not equal", "!=",
+                "<" , "is less than" ,
+                ">" , "is greater than" ,
+                "<=" , "is less than or equal to" ,
+                ">=" , "is greater than or equal to"
+            );
             RegisterOperators(30, "+", "-");
             RegisterOperators(40, "*", "/");
 

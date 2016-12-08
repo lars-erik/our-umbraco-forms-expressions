@@ -92,11 +92,6 @@ namespace Our.Umbraco.Forms.Expressions.Language
             if (!String.IsNullOrWhiteSpace(stringValue))
             {
                 double asDouble;
-                //int asInt;
-
-                //if (int.TryParse(stringValue, out asInt))
-                //    value = asInt;
-                //else 
                 if (double.TryParse(stringValue, out asDouble))
                     value = asDouble;
             }
