@@ -89,6 +89,10 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 ToTerm("+") | "-" | "*" | "/" | 
                 "==" | "equals" |
                 "!=" | "does not equal" |
+                "<" | "is less than" |
+                ">" | "is greater than" |
+                "<=" | "is less than or equal to" |
+                ">=" | "is greater than or equal to" |
                 "and" | "or";
                 
             assign.Rule = ToTerm("=");

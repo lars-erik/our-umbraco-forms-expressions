@@ -20,30 +20,96 @@ angular.module("umbraco").requires.push("ufx");
 
 }());
 
-(function() {
+(function () {
+
     angular.module("ufx").controller("ufx.program.controller", [
         "$scope",
         "$http",
         "umbRequestHelper",
         function (scope, http, requestHelper) {
             var urlKey = "ufx-program-evaluator",
-                runUrl = requestHelper.getApiUrl(urlKey, "Run");
+                runUrl = requestHelper.getApiUrl(urlKey, "Run"),
+                completers = {},
+                langTools = ace.require("ace/ext/language_tools");
+
+            completers.fieldCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var tokenAt = session.getTokenAt(pos.row, pos.col),
+                        isInside = tokenAt && tokenAt.type === "variable.parameter";
+                    var allFields = _.uniq(
+                            scope.fields.map(function(f) {
+                                return f.name;
+                            }).concat(scope.model.fields.map(function(f) {
+                                return f.caption;
+                            }))
+                        ),
+                        fields = allFields.map(function (f) {
+                            return {
+                                caption: f,
+                                value: isInside ? f : "[" + f + "]",
+                                meta: "field",
+                                type: "variable.parameter",
+                                score: 100
+                            }
+                        });
+                    callback(null, fields);
+                }
+            };
+
+            completers.variableCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var variables = findTokens(editor, "variable.other"),
+                        names = variables.map(function(v) {
+                            return v.value;
+                        }),
+                        completions = _.uniq(names).map(function (name) {
+                            return {
+                                caption: name,
+                                value: name,
+                                meta: "variable",
+                                type: "variable.other",
+                                score: 100
+                            }
+                        });
+                    callback(null, completions);
+                }
+            };
+
+            completers.functionCompleter = {
+                getCompletions: function (editor, session, pos, prefix, callback) {
+                    var functions = session.getMode().$highlightRules.functions.map(function(f) {
+                        return {
+                            caption: f + "()",
+                            value: f,
+                            meta: "function",
+                            type: "support.function"
+                        }
+                    });
+                    callback(null, functions);
+                }
+            };
+
+            function setupCompletion() {
+                langTools.setCompleters([langTools.keyWordCompleter, completers.fieldCompleter, completers.variableCompleter, completers.functionCompleter]);
+            }
 
             function fieldIsForToken(field, token) {
                 return token.value.toLowerCase() === "[" + field.name.toLowerCase() + "]";
             }
 
-            function findTokens(editor) {
+            function findTokens(editor, tokenType) {
                 var lines = editor.session.getLength(),
                     lineTokens,
                     tokens = [],
                     i,
                     j;
 
+                tokenType = tokenType || "variable.parameter";
+
                 for (i = 0; i < lines; i++) {
                     lineTokens = editor.session.getTokens(i);
                     for (j = 0; j < lineTokens.length; j++) {
-                        if (lineTokens[j].type === "support") {
+                        if (lineTokens[j].type === tokenType) {
                             tokens.push(lineTokens[j]);
                         }
                     }
@@ -100,6 +166,10 @@ angular.module("umbraco").requires.push("ufx");
 
                 addNewTokens(tokens);
                 removeUnusedTokens(tokens);
+
+                setTimeout(function() {
+                    scope.$digest();
+                }, 50);
             }
 
             scope.run = function () {
@@ -113,9 +183,18 @@ angular.module("umbraco").requires.push("ufx");
                 http.post(runUrl, {
                     Program: scope.setting.value,
                     Values: values
-                }).then(function(response) {
+                }).then(function (response) {
+                    var name, field;
                     scope.result = response.data;
                     scope.hasResult = response.data.Errors === null;
+
+                    for (name in scope.result.SetFields) {
+                        field = $.grep(scope.fields, function(n) {
+                            return function (f) { return f.name.toLowerCase() === n.toLowerCase(); }
+                        }(name))[0];
+                        field.value = scope.result.SetFields[name];
+                        scope.$broadcast("ufx.field.set", field.name);
+                    }
                 });
             }
 
@@ -133,12 +212,20 @@ angular.module("umbraco").requires.push("ufx");
             scope.result = {};
             scope.hasResult = false;
 
+            scope.populateFields = populateFields;
+
             scope.aceOpts = {
                 mode: "forms",
-                theme: "razor-chrome",
-                onChange: populateFields
+                theme: "chrome",
+                onChange: populateFields, 
+                require:['ace/ext/language_tools'], 
+                advanced: {
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true
+                }
             }
 
+            setupCompletion();
         }
     ]);
 }());
@@ -151,27 +238,24 @@ define("ace/mode/forms_highlight_rules", ["require", "exports", "module", "ace/l
     var FormsHighlightRules = function () {
 
         var keywords = (
-            ""
+            "if|else|end"
         );
 
         var builtinConstants = (
-            ""
+            "true|false"
         );
 
         var builtinFunctions = (
-            "ceiling|floor|abs"
+            "power|ceiling|floor|round|ifblank"
         );
 
         var dataTypes = (
-            ""
+            ".+|\\[.+\\]"
         );
 
         var keywordMapper = this.createKeywordMapper({
-            "support.function": builtinFunctions
-            //,
-            //"keyword": keywords,
-            //"constant.language": builtinConstants,
-            //"storage.type": dataTypes
+            "keyword": keywords,
+            "constant.language": builtinConstants
         }, "variable.other", true);
 
         this.$rules = {
@@ -179,11 +263,17 @@ define("ace/mode/forms_highlight_rules", ["require", "exports", "module", "ace/l
                 token: "constant.numeric", // float
                 regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
             }, {
-                token: "support",
-                regex: "\\[[^\\]]+\\]"
+                token: "variable.parameter",
+                regex: "\\[[^\\]]*\\]"
+            }, {
+                token: "support.function",
+                regex: builtinFunctions
             }, {
                 token: keywordMapper,
                 regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
+            }, {
+                token: "variable.other",
+                regex: "\w+"
             }, {
                 token: "keyword.operator",
                 regex: "\\+|\\-|\\/|\\*|="
@@ -198,7 +288,10 @@ define("ace/mode/forms_highlight_rules", ["require", "exports", "module", "ace/l
                 regex: "\\s+"
             }]
         };
+
         this.normalizeRules();
+
+        this.functions = builtinFunctions.split("|");
     };
 
     oop.inherits(FormsHighlightRules, TextHighlightRules);
@@ -206,7 +299,7 @@ define("ace/mode/forms_highlight_rules", ["require", "exports", "module", "ace/l
     exports.FormsHighlightRules = FormsHighlightRules;
 });
 
-define("ace/mode/forms", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/forms_highlight_rules"], function (require, exports, module) {
+define("ace/mode/forms", ["require", "exports", "module", "ace/lib/oop", "ace/mode/text", "ace/mode/forms_highlight_rules", "ace/ext/language_tools"], function (require, exports, module) {
 
     var oop = require("../lib/oop");
     var TextMode = require("./text").Mode;
@@ -229,3 +322,42 @@ define("ace/mode/forms", ["require", "exports", "module", "ace/lib/oop", "ace/mo
 
     exports.Mode = Mode;
 });
+
+angular.module("ufx").directive("ufxFieldAnimation", [
+    function () {
+        var speed = 250,
+            borders = [
+                "borderTopWidth",
+                "borderRightWidth",
+                "borderBottomWidth",
+                "borderLeftWidth",
+                "borderTopColor",
+                "borderRightColor",
+                "borderBottomColor",
+                "borderLeftColor",
+                "borderTopStyle",
+                "borderRightStyle",
+                "borderBottomStyle",
+                "borderLeftStyle"
+            ];
+        return {
+            restrict: "A",
+            link: function (scope, elm, attrs) {
+                var css = {}, i, hl, orig;
+                for (i = 0; i < borders.length; i++) {
+                    css[borders[i]] = elm.css(borders[i]);
+                }
+                hl = $.extend({ backgroundColor: "rgb(90, 255, 90)" }, css);
+                orig = $.extend({ backgroundColor: "rgb(255, 255, 255)" }, css);
+                scope.$on("ufx.field.set", function(evt, updatedField) {
+                    if (updatedField === attrs.ufxFieldAnimation) {
+                        elm.animate(hl, speed, "easeOutCubic", function() {
+                            elm.animate(orig, speed, "easeOutCubic", function() {
+                                elm.css(css);
+                            });
+                        });
+                    }
+                });
+            }
+        };
+    }]);

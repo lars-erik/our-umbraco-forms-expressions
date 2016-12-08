@@ -14,31 +14,41 @@
                 getCompletions: function (editor, session, pos, prefix, callback) {
                     var tokenAt = session.getTokenAt(pos.row, pos.col),
                         isInside = tokenAt && tokenAt.type === "variable.parameter";
-                    var fields = scope.fields.map(function(f) {
-                        return {
-                            caption: f.name,
-                            value: isInside ? f.name : "[" + f.name + "]",
-                            meta: "field",
-                            type: "variable.parameter",
-                            score: 100
-                        }
-                    });
+                    var allFields = _.uniq(
+                            scope.fields.map(function(f) {
+                                return f.name;
+                            }).concat(scope.model.fields.map(function(f) {
+                                return f.caption;
+                            }))
+                        ),
+                        fields = allFields.map(function (f) {
+                            return {
+                                caption: f,
+                                value: isInside ? f : "[" + f + "]",
+                                meta: "field",
+                                type: "variable.parameter",
+                                score: 100
+                            }
+                        });
                     callback(null, fields);
                 }
             };
 
             completers.variableCompleter = {
                 getCompletions: function (editor, session, pos, prefix, callback) {
-                    var variables = findTokens(editor, "variable.other");
-                    var completions = variables.map(function (v) {
-                        return {
-                            caption: v.value,
-                            value: v.value,
-                            meta: "variable",
-                            type: "variable.other",
-                            score: 100
-                        }
-                    });
+                    var variables = findTokens(editor, "variable.other"),
+                        names = variables.map(function(v) {
+                            return v.value;
+                        }),
+                        completions = _.uniq(names).map(function (name) {
+                            return {
+                                caption: name,
+                                value: name,
+                                meta: "variable",
+                                type: "variable.other",
+                                score: 100
+                            }
+                        });
                     callback(null, completions);
                 }
             };
@@ -135,7 +145,9 @@
                 addNewTokens(tokens);
                 removeUnusedTokens(tokens);
 
-                scope.$digest();
+                setTimeout(function() {
+                    scope.$digest();
+                }, 50);
             }
 
             scope.run = function () {
@@ -156,7 +168,7 @@
 
                     for (name in scope.result.SetFields) {
                         field = $.grep(scope.fields, function(n) {
-                            return function (f) { return f.name === n; }
+                            return function (f) { return f.name.toLowerCase() === n.toLowerCase(); }
                         }(name))[0];
                         field.value = scope.result.SetFields[name];
                         scope.$broadcast("ufx.field.set", field.name);
@@ -182,8 +194,13 @@
 
             scope.aceOpts = {
                 mode: "forms",
-                theme: "razor-chrome",
-                onChange: populateFields
+                theme: "chrome",
+                onChange: populateFields, 
+                require:['ace/ext/language_tools'], 
+                advanced: {
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true
+                }
             }
 
             setupCompletion();

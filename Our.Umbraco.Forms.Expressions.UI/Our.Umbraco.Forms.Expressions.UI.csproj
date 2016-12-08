@@ -188,6 +188,10 @@
     <Content Include="Editor\Scripts\lib\jquery-ui.min.js">
       <DependentUpon>jquery-ui.js</DependentUpon>
     </Content>
+    <Content Include="Editor\Scripts\lib\underscore.js" />
+    <Content Include="Editor\Scripts\lib\underscore.min.js">
+      <DependentUpon>underscore.js</DependentUpon>
+    </Content>
     <Content Include="Editor\Scripts\program-controller.js" />
     <Content Include="Editor\Scripts\strapper.js" />
     <Content Include="Editor\Scripts\test\directive-test-controller.js" />

@@ -4,30 +4,22 @@
     </div>
     <pre ng-model="setting.value" umb-ace-editor="aceOpts" class="setting-editor"></pre>
     <div class="fullscreen" ng-show="fullScreen">
-        <pre ng-model="setting.value" umb-ace-editor="{mode:'forms',theme:'razor-chrome'}" class="fs-editor"></pre>
+        <pre ng-model="setting.value" umb-ace-editor="aceOpts" class="fs-editor"></pre>
         <div class="parameters">
             <div>
-                <b>Parameters</b>
+                <b>Fields</b>
             </div>
             <div>
                 <div ng-repeat="field in fields">
                     <label>{{field.name}}</label>
-                    <input type="number" ng-model="field.value" />
+                    <input type="number" ng-model="field.value" ufx-field-animation="{{field.name}}" />
                 </div>
             </div>
             <div class="result" ng-show="hasResult">
-                <label>Result of expression:</label>
+                <label>Result</label>
                 <span>{{result.Value}}</span>
             </div>
-            <div class="setFields" ng-show="hasResult">
-                <label>Set fields:</label>
-                <div ng-repeat="(key, value) in result.SetFields">
-                    <label>{{key}}:</label>
-                    <span>{{value}}</span>
-                </div>
-            </div>
             <div class="error" ng-show="result.Errors">
-                <label>Errors:</label>
                 <span>{{result.Errors}}</span>
             </div>
         </div>

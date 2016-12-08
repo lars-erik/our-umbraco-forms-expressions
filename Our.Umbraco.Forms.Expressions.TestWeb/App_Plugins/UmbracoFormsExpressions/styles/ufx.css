@@ -21,9 +21,9 @@
 }
 .ufx.program .fs-editor {
   position: absolute;
-  left: 0;
-  top: 0;
-  right: 300px;
+  left: 20px;
+  top: 20px;
+  right: 320px;
   bottom: 52px;
   height: auto;
 }

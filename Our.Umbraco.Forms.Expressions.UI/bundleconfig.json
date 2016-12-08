@@ -4,7 +4,8 @@
             "bower_components/ace-builds/src/ace.js",
             "bower_components/ace-builds/src/ext-language_tools.js",
             "bower_components/ace-builds/src/mode-text.js",
-            "bower_components/ace-builds/src/theme-twilight.js"
+            "bower_components/ace-builds/src/theme-twilight.js",
+            "bower_components/ace-builds/src/theme-chrome.js"
         ],
         "outputFileName": "Editor/Scripts/lib/ace-bundle.js"
     },
@@ -19,5 +20,11 @@
             "bower_components/jquery-ui/ui/effect.js"
         ],
         "outputFileName": "Editor/Scripts/lib/jquery-ui.js"
+    },
+    {
+        "inputFiles": [
+            "bower_components/underscore/underscore.js"
+        ],
+        "outputFileName": "Editor/Scripts/lib/underscore.js"
     }
 ]

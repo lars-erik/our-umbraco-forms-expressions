@@ -6,7 +6,7 @@
   "workflowTypeId": "1c07752f-34f4-4e92-a711-bf920e6524e3",
   "executesOn": "Submitted",
   "settings": {
-    "Program": "A = [loan amount]\ni = ifblank([interest], 3.4) / 100 / 12\nN = [terms]\nP = (A*i)/(1-power(1+i, -N))\n[total amount] = round(P * N, 0)\n[monthly payment] = round(P, 0)"
+    "Program": "A = [Loan amount]\ni = ifblank([Interest], 3.4) / 100 / 12\nN = [Terms]\nP = (A*i)/(1-power(1+i, -N))\n[Total amount] = round(P * N, 0)\n[Monthly payment] = round(P, 0)\n\n"
   },
   "sortOrder": 1
 }

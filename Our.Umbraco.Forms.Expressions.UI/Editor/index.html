@@ -67,7 +67,7 @@
     </style>
 </head>
 <body>
-    <div ng-init="setting = {value:'x = [x]\n[y] = x + 1'}">
+    <div ng-init="setting = {value:'x = [x]\n[y] = x + 1'}; model = { fields: [{caption:'Field from form'},{caption:'Another field from form'}]}">
         <div ng-controller="ufx.program.controller">
             <pre ng-model="setting.value" id="editor" umb-ace-editor="{mode:'forms',theme:'twilight',onChange:populateFields, require:['ace/ext/language_tools'], advanced: {enableBasicAutocompletion:true, enableLiveAutocompletion: true}}" class="fs-editor"></pre>
             <div id="parameters">
@@ -99,6 +99,7 @@
     <script src="Scripts/lib/jquery.js"></script>
     <script src="Scripts/lib/jquery-ui.js"></script>
     <script src="../Scripts/angular.js"></script>
+    <script src="Scripts/lib/underscore.js"></script>
     <script src="Scripts/lib/ace-bundle.js" type="text/javascript" charset="utf-8"></script>
     <script src="Scripts/mode-forms.js" type="text/javascript" charset="utf-8"></script>
     <script src="Scripts/strapper.js"></script>

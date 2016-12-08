@@ -41,5 +41,17 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Comparison
             var program = $"[field] {op} {fieldValue}";
             Compare(program, literal, expected);
         }
+
+        [Test]
+        [TestCase(123.1, "<", 123.2, true)]
+        [TestCase(.5, "is less than", .6, true)]
+        [TestCase(123.1, "<", 123.1, false)]
+        [TestCase(.5, "is less than", .5, false)]
+        [TestCase(.6, "is less than", .5, false)]
+        public void Using_Less_Than(double fieldValue, string op, double literal, bool expected)
+        {
+            var program = $"[field] {op} {fieldValue}";
+            Compare(program, literal, expected);
+        }
     }
 }
