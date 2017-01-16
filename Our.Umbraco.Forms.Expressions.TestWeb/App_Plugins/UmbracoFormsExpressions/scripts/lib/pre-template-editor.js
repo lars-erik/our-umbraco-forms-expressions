@@ -21240,7 +21240,7 @@ dom.importCssString(exports.cssText, exports.cssClass);
 (function () {
     'use strict';
 
-    function AceEditorDirective(umbAceEditorConfig, assetsService) {
+    function AceEditorDirective(umbAceEditorConfig) {
 
         if (angular.isUndefined(window.ace)) {
             throw new Error('ui-ace need ace to work... (o rly?)');
@@ -21584,6 +21584,6 @@ dom.importCssString(exports.cssText, exports.cssClass);
 
     angular.module('umbraco.directives')
         .constant('umbAceEditorConfig', {})
-        .directive('umbAceEditor', AceEditorDirective);
+        .directive('umbAceEditor', ["umbAceEditorConfig", AceEditorDirective]);
 
 })();

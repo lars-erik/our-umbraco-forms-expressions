@@ -1,19 +1,25 @@
-﻿[
-    {
-        "inputFiles": [
-            "app_plugins/umbracoformsexpressions/scripts/src/module.js",
-            "app_plugins/umbracoformsexpressions/scripts/src/field-directive.js",
-            "../our.umbraco.forms.expressions.ui/editor/scripts/program-controller.js",
-            "../our.umbraco.forms.expressions.ui/editor/scripts/mode-forms.js",
-            "../our.umbraco.forms.expressions.ui/editor/scripts/ufx-field-animation-directive.js"
-        ],
-        "outputFileName": "app_plugins/umbracoformsexpressions/scripts/ufx.js"
-    },
-    {
-        "inputFiles": [
-            "../our.umbraco.forms.expressions.ui/editor/scripts/lib/ace-bundle.js",
-            "../our.umbraco.forms.expressions.ui/scripts/umbraco/aceeditor.directive.js"
-        ],
-        "outputFileName": "app_plugins/umbracoformsexpressions/scripts/lib/pre-template-editor.js"
-    }
+[
+  {
+    "outputFileName": "app_plugins/umbracoformsexpressions/scripts/ufx.js",
+    "inputFiles": [
+      "app_plugins/umbracoformsexpressions/scripts/src/module.js",
+      "app_plugins/umbracoformsexpressions/scripts/src/field-directive.js",
+      "../our.umbraco.forms.expressions.ui/editor/scripts/program-controller.js",
+      "../our.umbraco.forms.expressions.ui/editor/scripts/mode-forms.js",
+      "../our.umbraco.forms.expressions.ui/editor/scripts/ufx-field-animation-directive.js"
+    ]
+  },
+  {
+    "outputFileName": "app_plugins/umbracoformsexpressions/scripts/lib/pre-template-editor.js",
+    "inputFiles": [
+      "../our.umbraco.forms.expressions.ui/editor/scripts/lib/ace-bundle.js",
+      "../our.umbraco.forms.expressions.ui/scripts/umbraco/aceeditor.directive.js"
+    ]
+  },
+  {
+    "outputFileName": "App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.min.min.js",
+    "inputFiles": [
+      "App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.min.js"
+    ]
+  }
 ]
