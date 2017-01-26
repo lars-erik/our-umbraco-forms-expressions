@@ -34,7 +34,7 @@ namespace Our.Umbraco.Forms.Expressions.WebApi
             return evaluator.Evaluate(record, mappings);
         }
 
-        protected void AddField(string fieldName, int value)
+        protected void AddField(string fieldName, object value)
         {
             var fieldId = CreateMapping(fieldName);
             AddField(fieldId, value);
@@ -47,7 +47,7 @@ namespace Our.Umbraco.Forms.Expressions.WebApi
             return fieldId;
         }
 
-        private void AddField(Guid fieldId, int value)
+        private void AddField(Guid fieldId, object value)
         {
             record.RecordFields.Add(fieldId, new RecordField { Values = new List<object> { value } });
         }
@@ -56,7 +56,7 @@ namespace Our.Umbraco.Forms.Expressions.WebApi
     public class ProgramRequest
     {
         public string Program { get; set; }
-        public Dictionary<string, int> Values { get; set; }
+        public Dictionary<string, object> Values { get; set; }
     }
 
 }

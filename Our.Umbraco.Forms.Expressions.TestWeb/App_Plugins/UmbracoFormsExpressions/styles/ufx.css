@@ -52,6 +52,9 @@
   padding-right: 10px;
   height: 52px;
 }
+.ufx.program .error {
+  color: red;
+}
 @media all and (min-width: 1101px) {
   .ufx.program .fullscreen {
     left: 440px;

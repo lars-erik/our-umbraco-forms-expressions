@@ -1,7 +1,6 @@
 ﻿/// <reference path="../../../../../Umbraco/lib/angular/1.1.5/angular.js" />
 /// <reference path="../../../../../Umbraco/lib/angular/1.1.5/angular-mocks.js" />
 /// <reference path="umbraco-mocks.js" />
-/// <reference path="../module.js" />
 /// <reference path="../program-controller.js" />
 (function () {
 
@@ -43,13 +42,13 @@
             lineTokens = [[
                 { type: "identifier", value: "x" },
                 { type: "operator", value: "=" },
-                { type: "support", value: "[field a]" }
+                { type: "variable.parameter", value: "[field a]" }
                 ], [
                 { type: "text", value: "y" },
                 { type: "operator", value: "=" },
-                { type: "support", value: "[field b]" },
+                { type: "variable.parameter", value: "[field b]" },
                 { type: "operator", value: "+" },
-                { type: "support", value: "[field a]" }
+                { type: "variable.parameter", value: "[field a]" }
             ]];
 
             scope.aceOpts.onChange([null, editor]);
@@ -69,7 +68,7 @@
             lineTokens = [[
                 { type: "identifier", value: "x" },
                 { type: "operator", value: "=" },
-                { type: "support", value: "[field a]" }
+                { type: "variable.parameter", value: "[field a]" }
             ]];
 
             scope.aceOpts.onChange([null, editor]);
@@ -88,7 +87,7 @@
             lineTokens = [[
                 { type: "identifier", value: "x" },
                 { type: "operator", value: "=" },
-                { type: "support", value: "[field a]" }
+                { type: "variable.parameter", value: "[field a]" }
             ]];
 
             scope.aceOpts.onChange([null, editor]);
@@ -104,13 +103,15 @@
             var response = {};
             httpMock.expectPOST("/run", {
                 Program: "x = [field a]",
-                Values: { "field a": 5 }
+                Values: { "field a": 5, "field b": "", "field c": 0 }
             }).respond(200, response);
 
             scope.setting.value = "x = [field a]";
 
             scope.fields = [
-                { name: "field a", value: 5 }
+                { name: "field a", value: 5 },
+                { name: "field b", value: null },
+                { name: "field c", value: 0 }
             ];
 
             scope.run();

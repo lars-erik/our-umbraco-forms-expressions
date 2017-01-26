@@ -455,8 +455,6 @@
     </Content>
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\field-directive.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\module.js" />
-    <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\tests\program-controller-tests.js" />
-    <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\src\tests\umbraco-mocks.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\ufx.js" />
     <Content Include="App_Plugins\UmbracoFormsExpressions\scripts\ufx.min.js">
       <DependentUpon>ufx.js</DependentUpon>

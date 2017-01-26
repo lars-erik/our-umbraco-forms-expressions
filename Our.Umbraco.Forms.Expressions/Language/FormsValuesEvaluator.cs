@@ -46,7 +46,15 @@ namespace Our.Umbraco.Forms.Expressions.Language
             }
             catch (Exception ex)
             {
-                result.Errors = "Error in program. " + ex.Message;
+                var inner = ex.InnerException;
+                if (inner is InvalidCastException)
+                {
+                    result.Errors = "Error in program. Are you mixing text and numbers? If a field is blank you should use the IsBlank function to make it a number.";
+                }
+                else
+                {
+                    result.Errors = "Error in program. " + ex.Message;
+                }
             }
 
             result.Value = evaluatedValue;

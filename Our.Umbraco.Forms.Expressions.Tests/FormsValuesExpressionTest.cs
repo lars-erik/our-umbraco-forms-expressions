@@ -28,6 +28,13 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             return result;
         }
 
+        protected FormsValuesResult EvaluateResultWithError(string program)
+        {
+            var evaluator = new FormsValuesEvaluator(program);
+            var result = evaluator.Evaluate(record, mappings);
+            return result;
+        }
+
         [SetUp]
         public void Setup()
         {

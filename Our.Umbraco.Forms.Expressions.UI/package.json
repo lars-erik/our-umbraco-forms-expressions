@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "name": "umbraco.forms.expressions",
+    "private": true,
+    "scripts": {
+        "test": "karma start karma.conf.js"
+    },
+    "devDependencies": {
+        "karma": "1.4.0",
+        "karma-chrome-launcher": "^2.0.0",
+        "karma-jasmine": "^1.1.0",
+        "karma-jasmine-html-reporter": "0.2.2",
+        "jasmine": "2.5.3"
+    }
+}

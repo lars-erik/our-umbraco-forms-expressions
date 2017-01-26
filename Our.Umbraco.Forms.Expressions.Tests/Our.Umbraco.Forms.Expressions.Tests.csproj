@@ -161,6 +161,7 @@
     <Compile Include="Comparison\When_Combining_Comparisons.cs" />
     <Compile Include="Comparison\When_Comparing_Numbers.cs" />
     <Compile Include="Comparison\When_Comparing_Strings.cs" />
+    <Compile Include="Conversions\When_Mixing_Types.cs" />
     <Compile Include="Conversions\When_Reading_String_Fields.cs" />
     <Compile Include="Encoding\When_Reading_Fields_With_Special_Characters.cs" />
     <Compile Include="FormsValuesExpressionTest.cs" />

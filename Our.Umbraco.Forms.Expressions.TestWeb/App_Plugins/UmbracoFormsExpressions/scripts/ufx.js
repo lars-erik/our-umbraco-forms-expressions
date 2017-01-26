@@ -177,7 +177,7 @@ angular.module("umbraco").requires.push("ufx");
                     i;
 
                 for (i = 0; i < scope.fields.length; i++) {
-                    values[scope.fields[i].name] = scope.fields[i].value;
+                    values[scope.fields[i].name] = scope.fields[i].value == null ? "" : scope.fields[i].value;
                 }
 
                 http.post(runUrl, {
