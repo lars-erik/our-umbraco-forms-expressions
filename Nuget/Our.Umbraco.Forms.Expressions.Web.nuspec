@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Our.Umbraco.Forms.Expressions.Web</id>
-    <version>1.0.5-beta</version>
+    <version>1.0.6-beta</version>
     <authors>Lars-Erik Aabech</authors>
     <owners>Lars-Erik Aabech</owners>
     <licenseUrl>https://raw.githubusercontent.com/lars-erik/our-umbraco-forms-expressions/master/license.txt</licenseUrl>
@@ -18,8 +18,8 @@
   </metadata>
   <files>
     <file 
-      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\scripts\lib\pre-template-editor.min.js" 
-      target="content/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.min.js"/>
+      src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\scripts\lib\pre-template-editor.js" 
+      target="content/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.js"/>
     <file 
       src="..\Our.Umbraco.Forms.Expressions.TestWeb\App_Plugins\UmbracoFormsExpressions\scripts\ufx.js" 
       target="content/App_Plugins/UmbracoFormsExpressions/scripts/ufx.js"/>
