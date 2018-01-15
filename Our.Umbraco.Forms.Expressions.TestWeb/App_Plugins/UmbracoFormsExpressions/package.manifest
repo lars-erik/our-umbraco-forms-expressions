@@ -1,6 +1,6 @@
 ﻿{
     "javascript": [
-        "~/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.js",
+        "~/App_Plugins/UmbracoFormsExpressions/scripts/lib/pre-template-editor.min.js",
         "~/App_Plugins/UmbracoFormsExpressions/scripts/ufx.js"
     ],
     "css": [
