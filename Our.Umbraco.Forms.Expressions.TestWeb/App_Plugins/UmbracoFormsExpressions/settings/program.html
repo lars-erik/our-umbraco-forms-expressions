@@ -2,9 +2,11 @@
     <div class="setting-bar">
         <a ng-click="toggleFullScreen()"><i class="icon icon-window-sizes"></i></a>
     </div>
-    <pre ng-model="setting.value" umb-ace-editor="aceOpts" class="setting-editor"></pre>
+    <pre>{{setting | json}}</pre>
+    <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="setting-editor" ng-change="populateFields(this)"></pre>
     <div class="fullscreen" ng-show="fullScreen">
-        <pre ng-model="setting.value" umb-ace-editor="aceOpts" class="fs-editor"></pre>
+        <!--<pre>{{setting | json}}</pre>-->
+        <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="fs-editor" ng-change="populateFields(this)"></pre>
         <div class="parameters">
             <div>
                 <b>Fields</b>
@@ -12,7 +14,7 @@
             <div>
                 <div ng-repeat="field in fields">
                     <label>{{field.name}}</label>
-                    <input type="number" ng-model="field.value" ufx-field-animation="{{field.name}}" />
+                    <input type="number" ng-model="field.value" ufx-field-animation="{{field.name}}"/>
                 </div>
             </div>
             <div class="result" ng-show="hasResult">

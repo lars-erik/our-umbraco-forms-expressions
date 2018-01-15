@@ -5,8 +5,9 @@
     <meta charset="utf-8" />
 </head>
 <body ng-controller="test.controller">
-    <pre umb-ace-editor="{mode:'forms', theme:'twilight', onChange: populateFields}"
+    <pre calc-ace-editor="{mode:'forms', theme:'twilight', onChange: populateFields}"
          ng-model="setting.value"
+         model="setting.value"
          style="width: 300px; height: 200px; border: 1px solid gray;"></pre>
     
     <input type="text" ng-model="something"/>
@@ -17,7 +18,7 @@
     <script src="Scripts/mode-forms.js"></script>
     <script src="../Scripts/angular.js"></script>
     <script src="Scripts/strapper.js"></script>
-    <script src="../Scripts/umbraco/aceeditor.directive.js"></script>
+    <script src="../Scripts/umbraco/calcaceeditor.directive.js"></script>
     <script src="Scripts/test/directive-test-controller.js"></script>
 </body>
 </html>
