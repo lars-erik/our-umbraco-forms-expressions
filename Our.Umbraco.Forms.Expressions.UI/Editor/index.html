@@ -69,7 +69,7 @@
 <body>
     <div ng-init="setting = {value:'x = [x]\n[y] = x + 1'}; model = { fields: [{caption:'Field from form'},{caption:'Another field from form'}]}">
         <div ng-controller="ufx.program.controller">
-            <pre ng-model="setting.value" id="editor" ng-change="populateFields(this)" calc-ace-editor="{mode:'forms',theme:'twilight',onChange:populateFields, require:['ace/ext/language_tools'], advanced: {enableBasicAutocompletion:true, enableLiveAutocompletion: true}}" model="model" class="fs-editor"></pre>
+            <pre ng-model="setting.value" id="editor" calc-ace-editor="{mode:'forms',theme:'twilight',onChange:populateFields, require:['ace/ext/language_tools'], advanced: {enableBasicAutocompletion:true, enableLiveAutocompletion: true}}" model="model" class="fs-editor"></pre>
             <div id="parameters">
                 <div>
                     <b>Parameters</b>

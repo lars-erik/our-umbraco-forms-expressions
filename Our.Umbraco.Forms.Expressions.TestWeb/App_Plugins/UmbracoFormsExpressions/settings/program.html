@@ -3,10 +3,10 @@
         <a ng-click="toggleFullScreen()"><i class="icon icon-window-sizes"></i></a>
     </div>
     <pre>{{setting | json}}</pre>
-    <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="setting-editor" ng-change="populateFields(this)"></pre>
+    <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="setting-editor" ></pre> <!--ng-change="populateFields(this)"-->
     <div class="fullscreen" ng-show="fullScreen">
         <!--<pre>{{setting | json}}</pre>-->
-        <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="fs-editor" ng-change="populateFields(this)"></pre>
+        <pre ng-model="setting.value" calc-ace-editor="aceOpts" model="setting.value" class="fs-editor" ></pre>
         <div class="parameters">
             <div>
                 <b>Fields</b>

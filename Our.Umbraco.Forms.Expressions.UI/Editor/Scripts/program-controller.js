@@ -5,7 +5,7 @@
         var urlKey = "ufx-program-evaluator",
             runUrl = requestHelper.getApiUrl(urlKey, "Run"),
             completers = {},
-            langTools = ace.require("lib/ace-builds/src-min-noconflict/ext-language_tools"); //ace/ext/language_tools
+            langTools = ace.require("ace/ext/language_tools");
         
 
 
@@ -133,8 +133,8 @@
             }
         }
 
-        function populateFields(scope) {
-            var editor = scope.editor,//window.ace.edit(name);
+        function populateFields(args) {
+            var editor = args[1],//window.ace.edit(name);
                 tokens = findTokens(editor);
 
             // Value reset when digested for some reason. Leave it be...
@@ -196,7 +196,7 @@
             mode: "forms",
             theme: "chrome",
            onChange: populateFields,
-           require: ['lib/ace-builds/src-min-noconflict/ext-language_tools'], //['ace/ext/language_tools']
+           require: ['ace/ext/language_tools'], //['ace/ext/language_tools']
             advanced: {
                 enableBasicAutocompletion: true,
                 enableLiveAutocompletion: true
@@ -214,14 +214,16 @@
         "assetsService",
         function(scope, http, requestHelper, assetsService) {
             // Load in ace library
-            assetsService.load(['lib/ace-builds/src-min-noconflict/ace.js', 'lib/ace-builds/src-min-noconflict/ext-language_tools.js']).then(function () {
-                if (angular.isUndefined(window.ace)) {
-                    throw new Error('ui-ace need ace to work... (o rly?)');
-                } else {
-                    // init editor
-                    doStuf(scope, http, requestHelper, assetsService);
-                }
-            });
+            //assetsService.load(['lib/ace-builds/src-min-noconflict/ace.js', 'lib/ace-builds/src-min-noconflict/ext-language_tools.js']).then(function () {
+            //    if (angular.isUndefined(window.ace)) {
+            //        throw new Error('ui-ace need ace to work... (o rly?)');
+            //    } else {
+            //        // init editor
+            //        doStuf(scope, http, requestHelper, assetsService);
+            //    }
+            //});
+
+            doStuf(scope, http, requestHelper, assetsService);
 
         }
     ]);

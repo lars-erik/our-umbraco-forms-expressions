@@ -12,9 +12,9 @@
   {
     "outputFileName": "app_plugins/umbracoformsexpressions/scripts/lib/pre-template-editor.js",
     "inputFiles": [
-        //"../our.umbraco.forms.expressions.ui/editor/scripts/lib/ace-bundle.js",
-        "../our.umbraco.forms.expressions.ui/scripts/umbraco/calcaceeditor.directive.js",
-        "../our.umbraco.forms.expressions.ui/editor/scripts/lib/define-bundle.js"
+        "../our.umbraco.forms.expressions.ui/editor/scripts/lib/ace-bundle.js",
+        "../our.umbraco.forms.expressions.ui/scripts/umbraco/calcaceeditor.directive.js"
+        //"../our.umbraco.forms.expressions.ui/editor/scripts/lib/define-bundle.js"
 
     ]
   },
