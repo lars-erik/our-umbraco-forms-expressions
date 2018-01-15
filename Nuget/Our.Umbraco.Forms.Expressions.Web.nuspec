@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Our.Umbraco.Forms.Expressions.Web</id>
-    <version>1.0.4-beta</version>
+    <version>1.0.5-beta</version>
     <authors>Lars-Erik Aabech</authors>
     <owners>Lars-Erik Aabech</owners>
     <licenseUrl>https://raw.githubusercontent.com/lars-erik/our-umbraco-forms-expressions/master/license.txt</licenseUrl>
@@ -13,7 +13,7 @@
     <copyright>Copyright 2016 Lars-Erik Aabech</copyright>
     <tags>Umbraco Forms Expressions UFX</tags>
     <dependencies>
-      <dependency id="Our.Umbraco.Forms.Expressions" version="1.0.3-beta" />
+      <dependency id="Our.Umbraco.Forms.Expressions" version="1.0.5-beta" />
     </dependencies>
   </metadata>
   <files>
