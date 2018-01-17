@@ -18,5 +18,15 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Conversions
             var value = EvaluateValue(program);
             Assert.That(value, Is.EqualTo(.5));
         }
+
+        [Test]
+        public void Keeps_String_If_NaN()
+        {
+            const string expected = "Hello world!";
+            var program = "x = [x]";
+            AddField("x", expected);
+            var value = EvaluateValue(program);
+            Assert.That(value, Is.EqualTo(expected));
+        }
     }
 }

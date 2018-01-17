@@ -301,6 +301,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assigning\When_Assigning_String_To_Field.cs" />
+    <Compile Include="Assigning\When_Assigning_String_To_Variable.cs" />
     <Compile Include="Comparison\ComparisonTest.cs" />
     <Compile Include="Comparison\When_Combining_Comparisons.cs" />
     <Compile Include="Comparison\When_Comparing_Numbers.cs" />

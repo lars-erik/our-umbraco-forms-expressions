@@ -172,7 +172,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             ParseTreeNodeList mappedChildNodes = treeNode.GetMappedChildNodes();
             this.Test = this.AddChild("Test", mappedChildNodes[1]);
             this.IfTrue = this.AddChild("IfTrue", mappedChildNodes[2]);
-            if (mappedChildNodes.Count <= 3)
+            if (mappedChildNodes.Count <= 4)
                 return;
             this.IfFalse = this.AddChild("IfFalse", mappedChildNodes[4]);
         }

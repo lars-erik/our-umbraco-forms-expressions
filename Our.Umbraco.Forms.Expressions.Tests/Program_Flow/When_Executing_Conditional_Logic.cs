@@ -16,7 +16,27 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Program_Flow
         public void Only_Executes_When_Expression_Is_True(int value, bool expectedResult)
         {
             const string program = @"
+                result = false
                 if [x] == 1
+                    result = true
+                end
+                output = result
+            ";
+
+            AddField("x", value);
+
+            var result = EvaluateResult(program);
+
+            Assert.That(result.Value, Is.EqualTo(expectedResult));
+        }
+
+        [Test]
+        [TestCase(1, false)]
+        [TestCase(2, true)]
+        public void Executes_Else_Block_When_Expression_Is_False(int value, bool expectedResult)
+        {
+            const string program = @"
+                if [x] == 2
                     result = true
                 else
                     result = false
