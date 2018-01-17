@@ -1,6 +1,5 @@
 <div class="content-type-editor-dialog edit-property-settings" ng-controller="UmbracoForms.Overlays.FieldSettingsOverlay as vm">
 
-
     <!-- Name -->
     <div class="umb-control-group control-group">
         <textarea
@@ -16,6 +15,15 @@
         </textarea>
 
         <div class="umb-validation-label" val-msg-for="propertyLabel" val-toggle-msg="required">Required label</div>
+    </div>
+
+    <!-- Alias -->
+    <div class="umb-control-group control-group">
+        <umb-generate-alias
+            enable-lock="true"
+            alias-from="model.field.caption"
+            alias="model.field.alias">
+        </umb-generate-alias>
     </div>
 
     <!-- Description -->
@@ -159,7 +167,7 @@
                         <div class="umb-forms__select">
                             <select
                                 ng-model="rule.field"
-                                ng-options="field.id as field.caption for field in model.fields"
+                                ng-options="field.id as field.caption for field in vm.fieldConditions"
                                 ng-change="vm.conditionFieldSelected(rule.field, rule)"
                                 ng-init="vm.conditionFieldSelected(rule.field, rule)">
                                 <option value="">Select field</option>
