@@ -16,7 +16,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
             { "round", "Round" },
             { "ceiling", "Ceiling" },
             { "floor", "Floor" },
-            { "isblank", "IsBlank" }
+            { "isblank", "IsBlank" },
+            { "contains", "Contains" }
         };
 
         public Dictionary<string, Guid> Mappings;
@@ -35,6 +36,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             base.Init();
             BuiltIns.ImportStaticMembers(typeof(Math));
             BuiltIns.Add("ifblank", new ClrMethodBindingTargetInfo(GetType(), "IfBlank", this));
+            BuiltIns.Add("contains", new ClrMethodBindingTargetInfo(GetType(), "Contains", this));
         }
 
         public override void InitBinaryOperatorImplementationsForMatchedTypes()
@@ -158,6 +160,23 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 return alternativeValue;
             }
             return value;
+        }
+
+        private object Contains(object fieldValue, object lookForValue)
+        {
+            var stringValue = fieldValue as string;
+            var lookForStringValue = lookForValue as string;
+            if (stringValue == null && lookForStringValue == null)
+            {
+                return true;
+            }
+
+            if (stringValue == null || lookForStringValue == null)
+            {
+                return false;
+            }
+
+            return stringValue.Contains(lookForStringValue);
         }
     }
 

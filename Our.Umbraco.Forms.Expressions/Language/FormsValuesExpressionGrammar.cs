@@ -82,7 +82,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
             functionCall.Rule = functionName + "(" + argList + ")";
             functionName.Rule = ToTerm("power") | "round" | 
                                 "ceiling" | "floor" |
-                                "ifblank";
+                                "ifblank" | "contains";
 
             unOp.Rule = ToTerm("+") | "-";
             binOp.Rule = 
@@ -93,7 +93,8 @@ namespace Our.Umbraco.Forms.Expressions.Language
                 ">" | "is greater than" + ReduceHere() |
                 "<=" | "is less than or equal to" + ReduceHere() |
                 ">=" | "is greater than or equal to" + ReduceHere() |
-                "and" | "or";
+                "and" | "or"
+                ;
                 
             assign.Rule = ToTerm("=");
             
