@@ -22,5 +22,17 @@ namespace Our.Umbraco.Forms.Expressions.Tests.Comparison
             var result = EvaluateResult(program);
             Assert.That(result.Value, Is.EqualTo(expectedResult));
         }
+
+        [Test]
+        [TestCase("123", "234", "123", true)]
+        [TestCase("123", "234", "234", true)]
+        [TestCase("123", "234", "345", false)]
+        public void Using_Contains_With_Multivalue_Field(string fieldValueA, string fieldValueB, string criteria, bool expectedResult)
+        {
+            var program = $"x = contains([field], \"{criteria}\")";
+            AddField("field", fieldValueA, fieldValueB);
+            var result = EvaluateResult(program);
+            Assert.That(result.Value, Is.EqualTo(expectedResult));
+        }
     }
 }

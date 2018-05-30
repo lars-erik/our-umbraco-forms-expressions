@@ -42,10 +42,10 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             mappings = new Dictionary<string, Guid>();
         }
 
-        protected void AddField(string fieldName, object value)
+        protected void AddField(string fieldName, params object[] values)
         {
             var fieldId = CreateMapping(fieldName);
-            AddField(fieldId, value);
+            AddField(fieldId, values);
         }
 
         private Guid CreateMapping(string fieldName)
@@ -55,9 +55,9 @@ namespace Our.Umbraco.Forms.Expressions.Tests
             return fieldId;
         }
 
-        private void AddField(Guid fieldId, object value)
+        private void AddField(Guid fieldId, params object[] values)
         {
-            record.RecordFields.Add(fieldId, new RecordField {Values = new List<object> {value}});
+            record.RecordFields.Add(fieldId, new RecordField {Values = values.ToList()});
         }
 
         protected object FieldValue(string fieldName)

@@ -88,7 +88,7 @@ namespace Our.Umbraco.Forms.Expressions.Language
 
         private static object TryConvertToNumber(RecordField field)
         {
-            var value = field.Values[0];
+            var value = field.Values.Count > 1 ? field.ValuesAsString() : field.Values[0];
             var stringValue = value as string;
 
             if (!String.IsNullOrWhiteSpace(stringValue))
